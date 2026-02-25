@@ -10,8 +10,8 @@
   --accent-soft: rgba(255, 255, 255, 0.7);
   --max-width: 1140px;
   --header-height: 74px;
-  --radius-sm: 10px;
-  --radius-md: 14px;
+  --radius-sm: 6px;
+  --radius-md: 9px;
   --glass-blur: 12px;
   --panel-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
 }
