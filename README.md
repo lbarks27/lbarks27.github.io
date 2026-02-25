@@ -3,7 +3,7 @@
 Static portfolio site with a SpaceX-inspired visual direction.
 
 ## Includes
-- Homepage with `About`, `Projects`, `Resume`, `Blog`, and `Contact`
+- Homepage with `Projects`, `Resume`, `Blog`, and `Contact`
 - Individual project pages via `project.html?id=<project-id>`
 - Blog page for high-level milestone updates
 - Data model in one file: `assets/js/projects.js`
