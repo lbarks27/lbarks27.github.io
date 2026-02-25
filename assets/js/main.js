@@ -192,16 +192,26 @@
 
     const updateFx = function () {
       const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const viewportWidth = Math.max(window.innerWidth, 1);
+      const viewportHeight = Math.max(window.innerHeight, 1);
       const progress = Math.min(window.scrollY / maxScroll, 1);
-      const driftY = -window.scrollY * 0.07;
-      const driftX = Math.sin(window.scrollY * 0.0024) * 26;
-      const scanY = window.scrollY * 0.035;
-      const scanX = Math.sin(window.scrollY * 0.0018) * 3;
-      const flicker = 0.92 + Math.sin(window.scrollY * 0.03) * 0.05;
+      const sourceX = viewportWidth * (1.22 + Math.sin(window.scrollY * 0.0006) * 0.12);
+      const sourceY = viewportHeight * (-0.18 + Math.cos(window.scrollY * 0.0008) * 0.22 + progress * 0.22);
+      const coreX = viewportWidth * (0.5 + Math.sin(window.scrollY * 0.00095) * 0.15);
+      const coreY = viewportHeight * (0.54 + progress * 0.28 + Math.cos(window.scrollY * 0.0007) * 0.08);
+      const angleRad = Math.atan2(coreY - sourceY, coreX - sourceX);
+      const beamAngle = angleRad * (180 / Math.PI);
+      const beamAngleCss = beamAngle + 90;
+      const scanX = Math.sin(window.scrollY * 0.002) * 2.8;
+      const scanY = window.scrollY * 0.024;
+      const flicker = 0.9 + Math.sin(window.scrollY * 0.028) * 0.06;
 
       root.style.setProperty("--fx-scroll", progress.toFixed(4));
-      root.style.setProperty("--fx-drift-x", driftX.toFixed(2) + "px");
-      root.style.setProperty("--fx-drift-y", driftY.toFixed(2) + "px");
+      root.style.setProperty("--fx-source-x", sourceX.toFixed(2) + "px");
+      root.style.setProperty("--fx-source-y", sourceY.toFixed(2) + "px");
+      root.style.setProperty("--fx-core-x", coreX.toFixed(2) + "px");
+      root.style.setProperty("--fx-core-y", coreY.toFixed(2) + "px");
+      root.style.setProperty("--fx-beam-angle", beamAngleCss.toFixed(2) + "deg");
       root.style.setProperty("--fx-scan-x", scanX.toFixed(2) + "px");
       root.style.setProperty("--fx-scan-y", scanY.toFixed(2) + "px");
       root.style.setProperty("--fx-flicker", flicker.toFixed(3));

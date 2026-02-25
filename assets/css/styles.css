@@ -15,11 +15,14 @@
   --glass-blur: 12px;
   --panel-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
   --fx-scroll: 0;
-  --fx-drift-x: 0px;
-  --fx-drift-y: 0px;
   --fx-scan-x: 0px;
   --fx-scan-y: 0px;
   --fx-flicker: 1;
+  --fx-source-x: 118vw;
+  --fx-source-y: -14vh;
+  --fx-core-x: 50vw;
+  --fx-core-y: 56vh;
+  --fx-beam-angle: 136deg;
 }
 
 * {
@@ -53,12 +56,12 @@ body::before {
   background-image:
     repeating-linear-gradient(
       90deg,
-      rgba(255, 96, 96, 0.08) 0,
-      rgba(255, 96, 96, 0.08) 1px,
-      rgba(104, 242, 187, 0.05) 1px,
-      rgba(104, 242, 187, 0.05) 2px,
-      rgba(98, 148, 255, 0.08) 2px,
-      rgba(98, 148, 255, 0.08) 3px,
+      rgba(255, 112, 80, 0.09) 0,
+      rgba(255, 112, 80, 0.09) 1px,
+      rgba(226, 255, 244, 0.06) 1px,
+      rgba(226, 255, 244, 0.06) 2px,
+      rgba(108, 178, 255, 0.1) 2px,
+      rgba(108, 178, 255, 0.1) 3px,
       rgba(8, 10, 14, 0.03) 3px,
       rgba(8, 10, 14, 0.03) 4px
     ),
@@ -69,7 +72,7 @@ body::before {
       rgba(255, 255, 255, 0) 1px,
       rgba(255, 255, 255, 0) 5px
     );
-  opacity: calc(0.24 * var(--fx-flicker));
+  opacity: calc(0.21 * var(--fx-flicker));
   mix-blend-mode: screen;
   transform: translate3d(var(--fx-scan-x), var(--fx-scan-y), 0);
 }
@@ -77,27 +80,35 @@ body::before {
 body::after {
   content: "";
   position: fixed;
-  width: min(72vw, 840px);
-  aspect-ratio: 1;
-  left: 50%;
-  top: 42%;
+  inset: -14vh -14vw;
   pointer-events: none;
   z-index: -1;
-  opacity: calc(0.2 + (var(--fx-scroll) * 0.26));
+  opacity: calc(0.16 + (var(--fx-scroll) * 0.34));
   background:
-    radial-gradient(circle at 58% 62%, rgba(188, 226, 255, 0.86), rgba(125, 192, 255, 0.4) 36%, rgba(0, 0, 0, 0) 70%),
-    radial-gradient(circle at 38% 58%, rgba(255, 137, 92, 0.52), rgba(255, 137, 92, 0.06) 45%, rgba(0, 0, 0, 0) 72%),
-    radial-gradient(circle at 33% 43%, rgba(209, 244, 144, 0.2), rgba(0, 0, 0, 0) 44%),
+    radial-gradient(36vmax 34vmax at var(--fx-source-x) var(--fx-source-y), rgba(255, 166, 92, 0.35), rgba(147, 222, 255, 0.26) 26%, rgba(0, 0, 0, 0) 64%),
+    conic-gradient(
+      from calc(var(--fx-beam-angle) - 26deg) at var(--fx-source-x) var(--fx-source-y),
+      rgba(0, 0, 0, 0) 0deg,
+      rgba(255, 130, 86, 0.56) 10deg,
+      rgba(254, 255, 245, 0.82) 18deg,
+      rgba(144, 214, 255, 0.66) 26deg,
+      rgba(116, 157, 255, 0.42) 34deg,
+      rgba(0, 0, 0, 0) 54deg,
+      rgba(0, 0, 0, 0) 360deg
+    ),
+    radial-gradient(26vmax 22vmax at var(--fx-core-x) var(--fx-core-y), rgba(238, 248, 255, 0.64), rgba(156, 205, 255, 0.34) 34%, rgba(74, 116, 255, 0.16) 56%, rgba(0, 0, 0, 0) 76%),
     linear-gradient(
-      92deg,
-      rgba(255, 112, 88, 0.5) 39%,
-      rgba(246, 250, 255, 0.92) 50%,
-      rgba(124, 172, 255, 0.62) 60%,
-      rgba(0, 0, 0, 0) 74%
+      var(--fx-beam-angle),
+      rgba(255, 128, 86, 0) 27%,
+      rgba(255, 128, 86, 0.34) 42%,
+      rgba(250, 253, 255, 0.84) 50%,
+      rgba(151, 206, 255, 0.52) 58%,
+      rgba(104, 144, 255, 0.2) 66%,
+      rgba(0, 0, 0, 0) 76%
     );
-  filter: blur(36px) saturate(145%);
+  filter: blur(30px) saturate(176%);
   mix-blend-mode: screen;
-  transform: translate(calc(-50% + var(--fx-drift-x)), calc(-42% + var(--fx-drift-y))) rotate(-8deg);
+  transform: translateZ(0);
 }
 
 a {
