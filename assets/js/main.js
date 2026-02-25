@@ -182,6 +182,47 @@
     });
   }
 
+  function installSpectralScrollFx() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    const root = document.documentElement;
+    let ticking = false;
+
+    const updateFx = function () {
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(window.scrollY / maxScroll, 1);
+      const driftY = -window.scrollY * 0.07;
+      const driftX = Math.sin(window.scrollY * 0.0024) * 26;
+      const scanY = window.scrollY * 0.035;
+      const scanX = Math.sin(window.scrollY * 0.0018) * 3;
+      const flicker = 0.92 + Math.sin(window.scrollY * 0.03) * 0.05;
+
+      root.style.setProperty("--fx-scroll", progress.toFixed(4));
+      root.style.setProperty("--fx-drift-x", driftX.toFixed(2) + "px");
+      root.style.setProperty("--fx-drift-y", driftY.toFixed(2) + "px");
+      root.style.setProperty("--fx-scan-x", scanX.toFixed(2) + "px");
+      root.style.setProperty("--fx-scan-y", scanY.toFixed(2) + "px");
+      root.style.setProperty("--fx-flicker", flicker.toFixed(3));
+    };
+
+    const onScroll = function () {
+      if (ticking) {
+        return;
+      }
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        updateFx();
+        ticking = false;
+      });
+    };
+
+    updateFx();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+  }
+
   function setYear() {
     const target = document.querySelector("[data-year]");
     if (target) {
@@ -194,5 +235,6 @@
   renderBlogPreview();
   installHeaderBehavior();
   installRevealAnimations();
+  installSpectralScrollFx();
   setYear();
 })();
