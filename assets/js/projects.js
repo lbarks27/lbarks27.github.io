@@ -15,6 +15,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Document state vector design, process/measurement models, noise assumptions, update equations, and validation strategy.",
       dataNotes: "Add datasets, test logs, and key performance plots (RMSE, latency, robustness).",
       github: "",
+      iconOverlay: "assets/images/visual-kalman-filter-overlay.jpg",
+      iconOverlayAlt: "Kalman filter information flow diagram",
       photos: [],
       videos: [],
       datasets: []
@@ -27,6 +29,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Include simulation architecture, model assumptions, control law, and sensitivity analysis.",
       dataNotes: "Add benchmark runs, convergence metrics, and scenario comparison tables.",
       github: "",
+      iconOverlay: "assets/images/vectorsim-overlay.png",
+      iconOverlayAlt: "Vector simulation 3D axis visualization",
       photos: [],
       videos: [],
       datasets: []
@@ -39,6 +43,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Capture subsystem architecture, tuning process, and failure-mode mitigations.",
       dataNotes: "Add test campaign data, validation criteria, and outcomes.",
       github: "",
+      iconOverlay: "assets/images/tv3-overlay.png",
+      iconOverlayAlt: "TV3 thrust vector control hardware setup",
       photos: [],
       videos: [],
       datasets: []
@@ -51,6 +57,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Include controller formulation, constraints, actuator limits, and tuning notes.",
       dataNotes: "Add gain schedules, response plots, and disturbance rejection results.",
       github: "",
+      iconOverlay: "assets/images/swerve-overlay-test.png",
+      iconOverlayAlt: "Swerve vector control hardware close-up",
       photos: [],
       videos: [],
       datasets: []
@@ -63,30 +71,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Add architecture diagrams, algorithm choices, and subsystem interfaces.",
       dataNotes: "Add telemetry snapshots, task success rates, and relevant datasets.",
       github: "",
-      photos: [],
-      videos: [],
-      datasets: []
-    },
-    {
-      id: "slprj",
-      title: "slprj",
-      tagline: "Build and generated-artifacts pipeline project.",
-      summary: "High-level summary pending. Clarify purpose, tooling, and integration value.",
-      solverApproach: "Deep dive pending. Document build graph, generated artifacts, and reproducibility approach.",
-      dataNotes: "Add build timing data and environment compatibility notes.",
-      github: "",
-      photos: [],
-      videos: [],
-      datasets: []
-    },
-    {
-      id: "plc-campaign",
-      title: "P&LC Campaign",
-      tagline: "Campaign-level planning and lifecycle controls work.",
-      summary: "High-level summary pending. Describe timeline, objectives, and key decisions.",
-      solverApproach: "Deep dive pending. Add planning model, optimization constraints, and decision logic.",
-      dataNotes: "Add campaign KPIs, milestone charts, and dataset references.",
-      github: "",
+      iconOverlay: "assets/images/spider-overlay.jpg",
+      iconOverlayAlt: "SPIDER hardware assembly on a table",
       photos: [],
       videos: [],
       datasets: []
@@ -99,6 +85,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Include cutoff criteria, control implications, and edge-case handling.",
       dataNotes: "Add transition logs, event timing data, and performance deltas.",
       github: "",
+      iconOverlay: "assets/images/mach-cutoff-overlay.png",
+      iconOverlayAlt: "Mach cutoff trajectory fan over map",
       photos: [],
       videos: [],
       datasets: []
@@ -111,6 +99,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Detail intersection tests, shading model, acceleration structures, and optimization.",
       dataNotes: "Add render benchmarks, sample scenes, and quality/performance comparisons.",
       github: "",
+      iconOverlay: "assets/images/lite-ray-tracer-overlay.png",
+      iconOverlayAlt: "Ray traced arc trajectories over particle field",
       photos: [],
       videos: [],
       datasets: []
@@ -123,18 +113,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Capture original assumptions, limitations, and migration notes.",
       dataNotes: "Add historical test data and comparison versus current approaches.",
       github: "",
-      photos: [],
-      videos: [],
-      datasets: []
-    },
-    {
-      id: "legacy-rp1-campaign",
-      title: "Legacy RP-1 Campaign",
-      tagline: "Archived campaign planning for RP-1 based testing.",
-      summary: "High-level summary pending. Provide context, scope, and archived outcomes.",
-      solverApproach: "Deep dive pending. Include campaign model and decision framework used at the time.",
-      dataNotes: "Add timeline data, resource usage tables, and historical findings.",
-      github: "",
+      iconOverlay: "assets/images/legacy-tvc-overlay.jpg",
+      iconOverlayAlt: "Legacy TVC test rig outdoors",
       photos: [],
       videos: [],
       datasets: []
@@ -147,18 +127,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Add thermodynamics assumptions, control strategy, and test instrumentation.",
       dataNotes: "Add test-stand measurements, pressure/temperature traces, and derived metrics.",
       github: "",
-      photos: [],
-      videos: [],
-      datasets: []
-    },
-    {
-      id: "kos",
-      title: "kOS",
-      tagline: "Automation scripts and mission logic for kOS workflows.",
-      summary: "High-level summary pending. Explain what was automated and why it improved iteration speed.",
-      solverApproach: "Deep dive pending. Include script architecture, guidance logic, and fail-safe behavior.",
-      dataNotes: "Add mission run logs, script performance data, and scenario outcomes.",
-      github: "",
+      iconOverlay: "assets/images/lf-engine-overlay.png",
+      iconOverlayAlt: "Finite element stress result on engine geometry",
       photos: [],
       videos: [],
       datasets: []
@@ -171,6 +141,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Document controls, autonomy strategy, and subsystem integration choices.",
       dataNotes: "Add match analytics, cycle-time data, and subsystem reliability metrics.",
       github: "",
+      iconOverlay: "assets/images/frc-overlay.png",
+      iconOverlayAlt: "FRC robot on competition field",
       photos: [],
       videos: [],
       datasets: []
@@ -183,6 +155,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Include trajectory method, optimization criteria, and guidance/control coupling.",
       dataNotes: "Add ascent traces, optimization outputs, and sensitivity sweeps.",
       github: "",
+      iconOverlay: "assets/images/ascent-overlay.png",
+      iconOverlayAlt: "Ascent path with engine plume over Earth horizon",
       photos: [],
       videos: [],
       datasets: []
@@ -195,6 +169,8 @@ window.PORTFOLIO_DATA = {
       solverApproach: "Deep dive pending. Cover instruction set design, clocking, memory map, and debugging strategy.",
       dataNotes: "Add timing captures, instruction tests, and validation steps.",
       github: "",
+      iconOverlay: "assets/images/8-bit-breadboard-overlay.jpg",
+      iconOverlayAlt: "8-bit breadboard computer wiring close-up",
       photos: [],
       videos: [],
       datasets: []
