@@ -1,14 +1,19 @@
 :root {
   --bg: #040507;
   --bg-soft: #0a0d12;
-  --bg-panel: rgba(255, 255, 255, 0.04);
+  --bg-panel: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
+  --bg-panel-soft: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
   --ink: #f5f7fa;
   --muted: #9ca6b7;
-  --line: rgba(255, 255, 255, 0.18);
+  --line: rgba(255, 255, 255, 0.22);
   --accent: #ffffff;
   --accent-soft: rgba(255, 255, 255, 0.7);
   --max-width: 1140px;
   --header-height: 74px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --glass-blur: 12px;
+  --panel-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
 }
 
 * {
@@ -47,6 +52,20 @@ body::before {
   opacity: 0.5;
 }
 
+body::after {
+  content: "";
+  position: fixed;
+  width: min(44vw, 540px);
+  aspect-ratio: 1;
+  right: -10vw;
+  bottom: -16vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.35;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.26), rgba(133, 183, 255, 0.12) 45%, transparent 72%);
+  filter: blur(40px);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -72,7 +91,7 @@ img {
   text-transform: uppercase;
   font-size: 0.84rem;
   color: var(--accent-soft);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .section-title {
@@ -102,9 +121,10 @@ img {
 }
 
 .site-header.scrolled {
-  background: rgba(1, 2, 3, 0.72);
+  background: rgba(5, 8, 12, 0.56);
   border-color: var(--line);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
 }
 
 .header-wrap {
@@ -144,12 +164,15 @@ img {
 .menu-toggle {
   display: none;
   border: 1px solid var(--line);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
   color: var(--ink);
   padding: 7px 10px;
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
 }
 
 .hero {
@@ -198,6 +221,9 @@ img {
   text-transform: uppercase;
   font-size: 0.84rem;
   transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(8px) saturate(125%);
+  -webkit-backdrop-filter: blur(8px) saturate(125%);
 }
 
 .btn:hover,
@@ -207,11 +233,28 @@ img {
 }
 
 .btn-primary {
-  background: rgba(255, 255, 255, 0.11);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.21), rgba(255, 255, 255, 0.08));
 }
 
 .btn-ghost {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.highlight-card,
+.project-card,
+.resume-shell,
+.resume-item,
+.blog-card,
+.contact-card,
+.panel,
+.resource-item,
+.placeholder,
+.media-thumb,
+.blog-row {
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  box-shadow: var(--panel-shadow);
 }
 
 .about-grid {
@@ -305,7 +348,7 @@ img {
 .resume-item {
   padding: 14px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-panel-soft);
 }
 
 .resume-item h4 {
@@ -365,6 +408,10 @@ img {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
 }
 
 .contact-grid {
@@ -464,7 +511,7 @@ img {
 .resource-item {
   border: 1px solid var(--line);
   padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-panel-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -491,7 +538,7 @@ img {
 
 .placeholder {
   border: 1px dashed rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-panel-soft);
   min-height: 160px;
   display: grid;
   place-items: center;
@@ -508,7 +555,7 @@ img {
 
 .media-thumb {
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-panel-soft);
   min-height: 180px;
   display: grid;
   place-items: center;
@@ -601,7 +648,10 @@ img {
     right: 4vw;
     left: 4vw;
     border: 1px solid var(--line);
-    background: rgba(0, 0, 0, 0.92);
+    background: rgba(8, 10, 14, 0.72);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border-radius: var(--radius-md);
     padding: 14px;
     display: none;
     flex-direction: column;
