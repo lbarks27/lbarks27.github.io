@@ -18,10 +18,15 @@
   --fx-scan-x: 0px;
   --fx-scan-y: 0px;
   --fx-flicker: 1;
-  --fx-source-x: 118vw;
+  --fx-source-x: -18vw;
   --fx-source-y: -14vh;
   --fx-core-x: 50vw;
   --fx-core-y: 56vh;
+  --fx-ghost-x: 78vw;
+  --fx-ghost-y: 62vh;
+  --fx-ghost2-x: 38vw;
+  --fx-ghost2-y: 47vh;
+  --fx-lens-alpha: 0.42;
   --fx-beam-angle: 136deg;
   --fx-spectrum-shift: 0deg;
   --fx-spectrum-saturation: 176%;
@@ -59,6 +64,7 @@ body {
   color: var(--ink);
   line-height: 1.6;
   min-height: 100vh;
+  isolation: isolate;
 }
 
 body::before {
@@ -135,6 +141,90 @@ body::after {
   filter: blur(30px) saturate(var(--fx-spectrum-saturation)) hue-rotate(var(--fx-spectrum-shift));
   mix-blend-mode: screen;
   transform: translateZ(0);
+}
+
+.fx-lens-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 120;
+  opacity: calc(var(--fx-lens-alpha) * var(--fx-flicker));
+  mix-blend-mode: screen;
+  contain: strict;
+}
+
+.fx-lens-overlay::before,
+.fx-lens-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fx-lens-overlay::before {
+  background:
+    radial-gradient(
+      24vmax 24vmax at var(--fx-source-x) var(--fx-source-y),
+      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.26),
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.14) 24%,
+      rgba(0, 0, 0, 0) 70%
+    ),
+    radial-gradient(
+      10vmax 10vmax at var(--fx-ghost-x) var(--fx-ghost-y),
+      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.23),
+      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.11) 34%,
+      rgba(0, 0, 0, 0) 72%
+    ),
+    radial-gradient(
+      6vmax 6vmax at var(--fx-ghost2-x) var(--fx-ghost2-y),
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.2),
+      rgba(0, 0, 0, 0) 74%
+    );
+  opacity: 0.84;
+}
+
+.fx-lens-overlay::after {
+  background:
+    radial-gradient(
+      92vmax 92vmax at 50% 50%,
+      rgba(255, 255, 255, 0) 58%,
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.08) 65%,
+      rgba(0, 0, 0, 0) 72%
+    ),
+    radial-gradient(
+      140% 130% at 50% 50%,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
+  opacity: calc(0.34 + (var(--fx-scroll) * 0.22));
+}
+
+.fx-lens-overlay[data-quality="lite"] {
+  mix-blend-mode: normal;
+  opacity: calc(var(--fx-lens-alpha) * 0.72);
+}
+
+.fx-lens-overlay[data-quality="lite"]::before {
+  background: radial-gradient(
+    22vmax 22vmax at var(--fx-source-x) var(--fx-source-y),
+    hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.17),
+    rgba(0, 0, 0, 0) 72%
+  );
+}
+
+.fx-lens-overlay[data-quality="lite"]::after {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-lens-overlay {
+    mix-blend-mode: normal;
+    opacity: calc(var(--fx-lens-alpha) * 0.62);
+  }
+
+  .fx-lens-overlay::after {
+    display: none;
+  }
 }
 
 a {

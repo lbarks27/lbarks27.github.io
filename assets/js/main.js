@@ -235,6 +235,47 @@
     return Math.min(max, Math.max(min, value));
   }
 
+  function shouldUseLiteLensFx() {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      return true;
+    }
+
+    const saveData =
+      typeof window.navigator.connection === "object" &&
+      window.navigator.connection !== null &&
+      window.navigator.connection.saveData === true;
+    if (saveData) {
+      return true;
+    }
+
+    const hardwareConcurrency = Number(window.navigator.hardwareConcurrency || 0);
+    const hasDeviceMemory = typeof window.navigator.deviceMemory === "number";
+    const deviceMemory = hasDeviceMemory ? Number(window.navigator.deviceMemory) : 0;
+    const compactTouchViewport = window.innerWidth < 960 && window.matchMedia("(pointer: coarse)").matches;
+    const desktopViewport = window.innerWidth >= 1200 && window.matchMedia("(pointer: fine)").matches;
+    const strongDevice = hasDeviceMemory && hardwareConcurrency >= 10 && deviceMemory >= 8;
+
+    if (compactTouchViewport) {
+      return true;
+    }
+
+    return !(desktopViewport && strongDevice);
+  }
+
+  function installLensOverlay() {
+    if (!document.body || document.querySelector("[data-lens-overlay]")) {
+      return;
+    }
+
+    const overlay = document.createElement("div");
+    overlay.className = "fx-lens-overlay";
+    overlay.setAttribute("data-lens-overlay", "");
+    overlay.setAttribute("data-quality", shouldUseLiteLensFx() ? "lite" : "full");
+    overlay.setAttribute("aria-hidden", "true");
+    document.body.appendChild(overlay);
+  }
+
   function createSpectralProfile() {
     const visitSeed = getVisitSeed();
     const pageKey = window.location.pathname + "|" + window.location.search;
@@ -242,8 +283,8 @@
     const rng = createSeededRng((visitSeed ^ pageSeed) >>> 0);
 
     return {
-      sourceBaseX: 1.14 + rng() * 0.22,
-      sourceBaseY: -0.34 + rng() * 0.4,
+      sourceBaseX: -0.26 + rng() * 0.24,
+      sourceBaseY: -0.34 + rng() * 0.36,
       sourceSwingX: 0.05 + rng() * 0.1,
       sourceSwingY: 0.1 + rng() * 0.16,
       sourceFreqX: 0.00045 + rng() * 0.0007,
@@ -288,8 +329,11 @@
     }
 
     const root = document.documentElement;
+    const useLiteLensFx = shouldUseLiteLensFx();
     const profile = createSpectralProfile();
     const unseededRng = createSeededRng(createRandomSeed());
+    const frameIntervalMs = useLiteLensFx ? 44 : 32;
+    let lastFrameTs = 0;
     const spontaneity = {
       phaseA: unseededRng() * Math.PI * 2,
       phaseB: unseededRng() * Math.PI * 2,
@@ -326,6 +370,7 @@
       const coreY =
         viewportHeight *
         (profile.coreBaseY + progress * profile.coreProgressY + Math.cos(window.scrollY * profile.coreFreqY) * profile.coreSwingY + noiseA * spontaneity.coreJitterY);
+      const lensAlpha = clamp(0.18 + progress * 0.12 + Math.abs(noiseA) * 0.04, 0.16, 0.36);
       const angleRad = Math.atan2(coreY - sourceY, coreX - sourceX);
       const beamAngle = angleRad * (180 / Math.PI);
       const beamAngleCss = beamAngle + profile.beamAxisOffset + noiseB * spontaneity.angleJitter;
@@ -353,6 +398,17 @@
       root.style.setProperty("--fx-source-y", sourceY.toFixed(2) + "px");
       root.style.setProperty("--fx-core-x", coreX.toFixed(2) + "px");
       root.style.setProperty("--fx-core-y", coreY.toFixed(2) + "px");
+      root.style.setProperty("--fx-lens-alpha", lensAlpha.toFixed(3));
+      if (!useLiteLensFx) {
+        const ghostX = coreX + (coreX - sourceX) * 0.72 + noiseB * (viewportWidth * 0.01);
+        const ghostY = coreY + (coreY - sourceY) * 0.72 + noiseC * (viewportHeight * 0.01);
+        const ghost2X = coreX - (coreX - sourceX) * 0.44 + noiseA * (viewportWidth * 0.008);
+        const ghost2Y = coreY - (coreY - sourceY) * 0.44 + noiseB * (viewportHeight * 0.008);
+        root.style.setProperty("--fx-ghost-x", ghostX.toFixed(2) + "px");
+        root.style.setProperty("--fx-ghost-y", ghostY.toFixed(2) + "px");
+        root.style.setProperty("--fx-ghost2-x", ghost2X.toFixed(2) + "px");
+        root.style.setProperty("--fx-ghost2-y", ghost2Y.toFixed(2) + "px");
+      }
       root.style.setProperty("--fx-beam-angle", beamAngleCss.toFixed(2) + "deg");
       root.style.setProperty("--fx-scan-x", scanX.toFixed(2) + "px");
       root.style.setProperty("--fx-scan-y", scanY.toFixed(2) + "px");
@@ -378,7 +434,12 @@
         return;
       }
       ticking = true;
-      window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function (timestamp) {
+        if (timestamp - lastFrameTs < frameIntervalMs) {
+          ticking = false;
+          return;
+        }
+        lastFrameTs = timestamp;
         updateFx();
         ticking = false;
       });
@@ -401,6 +462,7 @@
   renderBlogPreview();
   installHeaderBehavior();
   installRevealAnimations();
+  installLensOverlay();
   installSpectralScrollFx();
   setYear();
 })();
