@@ -1,9 +1,12 @@
 name: GitEvents ICS Generator
 on:
   issues:
-    types: [opened, edited, labeled, unlabeled]
+    types: [opened, edited, labeled, unlabeled, closed, reopened]
+  pull_request:
+    types: [opened, closed, reopened, edited]
   schedule:
-    - cron: '0 0 * * *' # Updates once a day
+    - cron: '0 */6 * * *' # Runs at minute 0 of every 6th hour
+  workflow_dispatch:
 jobs:
   generate:
     runs-on: ubuntu-latest
