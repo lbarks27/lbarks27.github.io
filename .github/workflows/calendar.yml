@@ -1,0 +1,23 @@
+name: GitEvents ICS Generator
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+  schedule:
+    - cron: '0 0 * * *' # Updates once a day
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: GitEvents ICS Generator
+        uses: gitevents/ics@v1.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          default-timezone: 'America/New_York'
+      - name: Push Calendar File
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add events.ics
+          git commit -m "update calendar file"
+          git push
