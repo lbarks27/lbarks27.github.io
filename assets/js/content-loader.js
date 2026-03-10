@@ -1,6 +1,13 @@
 (function () {
+  const CONTENT_VERSION = "20260310-2";
+
   function normalizeNewlines(value) {
     return String(value || "").replace(/\r\n?/g, "\n");
+  }
+
+  function buildVersionedPath(path) {
+    const separator = path.indexOf("?") === -1 ? "?" : "&";
+    return path + separator + "v=" + encodeURIComponent(CONTENT_VERSION);
   }
 
   function parseFrontMatter(text) {
@@ -291,7 +298,7 @@
   }
 
   async function loadText(path) {
-    const response = await fetch(path, { cache: "no-store" });
+    const response = await fetch(buildVersionedPath(path), { cache: "no-store" });
     if (!response.ok) {
       throw new Error("Failed to load " + path + " (" + response.status + ")");
     }
@@ -299,7 +306,7 @@
   }
 
   async function loadJson(path) {
-    const response = await fetch(path, { cache: "no-store" });
+    const response = await fetch(buildVersionedPath(path), { cache: "no-store" });
     if (!response.ok) {
       throw new Error("Failed to load " + path + " (" + response.status + ")");
     }
