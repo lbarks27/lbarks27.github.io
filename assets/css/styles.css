@@ -721,6 +721,79 @@ img {
   color: var(--muted);
 }
 
+.rich-text {
+  color: var(--muted);
+}
+
+.rich-text > :first-child {
+  margin-top: 0;
+}
+
+.rich-text > :last-child {
+  margin-bottom: 0;
+}
+
+.rich-text p,
+.rich-text ul,
+.rich-text ol,
+.rich-text pre {
+  margin: 0 0 12px;
+}
+
+.rich-text ul,
+.rich-text ol {
+  padding-left: 20px;
+}
+
+.rich-text li + li {
+  margin-top: 6px;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+  margin: 18px 0 10px;
+  color: var(--ink);
+  font-family: "Barlow Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.rich-text a {
+  color: var(--accent-soft);
+}
+
+.rich-text a:hover,
+.rich-text a:focus-visible {
+  color: var(--accent);
+}
+
+.rich-text code,
+.rich-text pre {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.rich-text code {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 0.12rem 0.3rem;
+}
+
+.rich-text pre {
+  border: 1px solid var(--line);
+  background: var(--bg-panel-soft);
+  overflow-x: auto;
+  padding: 12px;
+}
+
+.rich-text pre code {
+  background: transparent;
+  padding: 0;
+}
+
 .resource-list {
   display: grid;
   gap: 10px;

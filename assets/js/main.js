@@ -1,7 +1,15 @@
 (function () {
-  const data = window.PORTFOLIO_DATA;
+  function getDateParser() {
+    if (window.PORTFOLIO_UTILS && typeof window.PORTFOLIO_UTILS.parseIsoDate === "function") {
+      return window.PORTFOLIO_UTILS.parseIsoDate;
+    }
 
-  function setOwnerFields() {
+    return function (value) {
+      return new Date(value);
+    };
+  }
+
+  function setOwnerFields(data) {
     if (!data || !data.owner) {
       return;
     }
@@ -29,7 +37,7 @@
     }
   }
 
-  function renderProjects() {
+  function renderProjects(data) {
     const root = document.querySelector("[data-projects-root]");
     if (!root || !data || !Array.isArray(data.projects)) {
       return;
@@ -70,12 +78,13 @@
     });
   }
 
-  function renderBlogPreview() {
+  function renderBlogPreview(data) {
     const root = document.querySelector("[data-blog-preview-root]");
     if (!root || !data || !Array.isArray(data.blogPosts)) {
       return;
     }
 
+    const parseIsoDate = getDateParser();
     const formatter = new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "short",
@@ -84,7 +93,7 @@
 
     const posts = data.blogPosts
       .slice()
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => parseIsoDate(b.date).getTime() - parseIsoDate(a.date).getTime())
       .slice(0, 3);
 
     root.innerHTML = "";
@@ -96,7 +105,7 @@
 
       const meta = document.createElement("p");
       meta.className = "blog-meta";
-      meta.textContent = formatter.format(new Date(post.date));
+      meta.textContent = formatter.format(parseIsoDate(post.date));
 
       const title = document.createElement("h3");
       title.textContent = post.title;
@@ -457,12 +466,24 @@
     }
   }
 
-  setOwnerFields();
-  renderProjects();
-  renderBlogPreview();
-  installHeaderBehavior();
-  installRevealAnimations();
-  installLensOverlay();
-  installSpectralScrollFx();
-  setYear();
+  window.installRevealAnimationsFromProjectPage = installRevealAnimations;
+  window.installRevealAnimationsFromDynamicContent = installRevealAnimations;
+
+  async function init() {
+    const data = await window.PORTFOLIO_DATA_READY;
+    setOwnerFields(data);
+    renderProjects(data);
+    renderBlogPreview(data);
+    installHeaderBehavior();
+    installRevealAnimations();
+    installLensOverlay();
+    installSpectralScrollFx();
+    setYear();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
 })();

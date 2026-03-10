@@ -6,21 +6,23 @@ Static portfolio site with a SpaceX-inspired visual direction.
 - Homepage with `Projects`, `Resume`, `Blog`, and `Contact`
 - Individual project pages via `project.html?id=<project-id>`
 - Blog page for high-level milestone updates
-- Data model in one file: `assets/js/projects.js`
+- Editable content files in `content/projects/` and `content/blog/`
 
 ## Quick edit checklist
-1. Update your real links in `assets/js/projects.js`:
+1. Update your real links in `content/site.json`:
    - `owner.email`
    - `owner.github`
    - `owner.linkedin`
 2. Add your resume PDF to:
    - `assets/resume/Liam_Barkley_Resume.pdf`
-3. Add project details in `assets/js/projects.js`:
-   - `summary` (recruiter-friendly)
-   - `solverApproach` (technical deep dive)
-   - `github`
-   - `photos`, `videos`, `datasets`
-4. Add local media to `assets/images/` and reference paths in project data.
+3. Edit project files in `content/projects/*.md`:
+   - front matter for metadata like `github`, `photos`, `videos`, `datasets`
+   - `## Overview`
+   - `## Solver Deep Dive`
+   - `## Data and Results`
+4. Edit blog posts in `content/blog/*.md`.
+5. Add or remove filenames in `content/projects/index.json` and `content/blog/index.json` when you add or delete entries.
+6. Add local media to `assets/images/` and reference paths in project front matter.
 
 ## Local preview
 Run from this folder:
