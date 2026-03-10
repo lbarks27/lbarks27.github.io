@@ -12,7 +12,7 @@ Static portfolio site with a SpaceX-inspired visual direction.
 1. Update your real links in `content/site.json`:
    - `owner.email`
    - `owner.github`
-   - `owner.linkedin`
+   - `owner.youtube`
 2. Add your resume PDF to:
    - `assets/resume/Liam_Barkley_Resume.pdf`
 3. Edit project files in `content/projects/*.md`:

@@ -30,10 +30,10 @@
       githubLink.setAttribute("href", data.owner.github);
     }
 
-    const linkedinLink = document.querySelector("[data-owner-linkedin]");
-    if (linkedinLink) {
-      linkedinLink.textContent = data.owner.linkedin;
-      linkedinLink.setAttribute("href", data.owner.linkedin);
+    const youtubeLink = document.querySelector("[data-owner-youtube]");
+    if (youtubeLink && data.owner.youtube) {
+      youtubeLink.textContent = data.owner.youtube;
+      youtubeLink.setAttribute("href", data.owner.youtube);
     }
   }
 
