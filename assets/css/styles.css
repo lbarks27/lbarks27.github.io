@@ -77,13 +77,13 @@ body::before {
     repeating-linear-gradient(
       90deg,
       hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.1) 0,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.1) 1px,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.06) 1px,
+      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.1) 2px,
       hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.06) 2px,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.1) 2px,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.1) 3px,
-      rgba(8, 10, 14, 0.03) 3px,
-      rgba(8, 10, 14, 0.03) 4px
+      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.06) 4px,
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.1) 4px,
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.1) 6px,
+      rgba(8, 10, 14, 0.03) 6px,
+      rgba(8, 10, 14, 0.03) 8px
     ),
     repeating-linear-gradient(
       180deg,
