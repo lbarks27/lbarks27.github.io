@@ -113,14 +113,21 @@ body::after {
       rgba(0, 0, 0, 0) 64%
     ),
     conic-gradient(
-      from calc(var(--fx-beam-angle) - 26deg) at var(--fx-source-x) var(--fx-source-y),
+      from calc(var(--fx-beam-angle) - 34deg) at var(--fx-source-x) var(--fx-source-y),
       rgba(0, 0, 0, 0) 0deg,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.58) 10deg,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.84) 18deg,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.66) 26deg,
-      hsl(var(--fx-deep-h) var(--fx-deep-s) var(--fx-deep-l) / 0.44) 34deg,
-      rgba(0, 0, 0, 0) 54deg,
+      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.52) 12deg,
+      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.86) 24deg,
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.68) 36deg,
+      hsl(var(--fx-deep-h) var(--fx-deep-s) var(--fx-deep-l) / 0.42) 48deg,
+      rgba(0, 0, 0, 0) 74deg,
       rgba(0, 0, 0, 0) 360deg
+    ),
+    radial-gradient(
+      30vmax 18vmax at calc(var(--fx-core-x) - 6vw) calc(var(--fx-core-y) - 2vh),
+      rgba(0, 0, 0, 0) 28%,
+      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.42) 38%,
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.22) 48%,
+      rgba(0, 0, 0, 0) 62%
     ),
     radial-gradient(
       26vmax 22vmax at var(--fx-core-x) var(--fx-core-y),
@@ -131,12 +138,12 @@ body::after {
     ),
     linear-gradient(
       var(--fx-beam-angle),
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0) 27%,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.36) 42%,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.86) 50%,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.54) 58%,
-      hsl(var(--fx-deep-h) var(--fx-deep-s) var(--fx-deep-l) / 0.24) 66%,
-      rgba(0, 0, 0, 0) 76%
+      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0) 22%,
+      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.24) 38%,
+      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.9) 49%,
+      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.52) 60%,
+      hsl(var(--fx-deep-h) var(--fx-deep-s) var(--fx-deep-l) / 0.18) 71%,
+      rgba(0, 0, 0, 0) 84%
     );
   filter: blur(30px) saturate(var(--fx-spectrum-saturation)) hue-rotate(var(--fx-spectrum-shift));
   mix-blend-mode: screen;
