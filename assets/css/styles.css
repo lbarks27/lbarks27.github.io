@@ -382,114 +382,34 @@ img {
 }
 
 .btn {
-  --btn-surface-top: 0.24;
-  --btn-surface-bottom: 0.08;
-  --btn-prism-warm: 0.12;
-  --btn-prism-cool: 0.16;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 46px;
   border: 1px solid var(--line);
   padding: 0 18px;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
   font-family: "Barlow Condensed", sans-serif;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-size: 0.84rem;
-  color: rgb(245 247 250 / 0.97);
-  text-shadow: 0 1px 0 rgb(3 5 8 / 0.34);
-  background:
-    linear-gradient(
-      180deg,
-      rgb(255 255 255 / var(--btn-surface-top)),
-      rgb(255 255 255 / var(--btn-surface-bottom))
-    ),
-    linear-gradient(
-      118deg,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / var(--btn-prism-warm)) 0%,
-      rgb(255 255 255 / 0.08) 38%,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.16) 54%,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / var(--btn-prism-cool)) 76%,
-      rgb(255 255 255 / 0.04) 100%
-    ),
-    radial-gradient(
-      circle at 18% 20%,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.34) 0%,
-      rgb(255 255 255 / 0) 34%
-    ),
-    radial-gradient(
-      circle at 82% 80%,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.24) 0%,
-      rgb(255 255 255 / 0) 42%
-    );
-  background-blend-mode: screen, normal, screen, normal;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.42),
-    inset 0 -1px 0 rgb(255 255 255 / 0.06),
-    inset 1px 0 0 hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.14),
-    inset -1px 0 0 hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.16),
-    0 10px 24px rgb(0 0 0 / 0.18);
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-position 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   border-radius: var(--radius-sm);
-  backdrop-filter: blur(14px) saturate(165%) contrast(112%);
-  -webkit-backdrop-filter: blur(14px) saturate(165%) contrast(112%);
-}
-
-.btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      124deg,
-      rgb(255 255 255 / 0) 18%,
-      rgb(255 255 255 / 0.32) 34%,
-      rgb(255 255 255 / 0.08) 46%,
-      rgb(255 255 255 / 0) 60%
-    ),
-    linear-gradient(
-      180deg,
-      rgb(255 255 255 / 0.22) 0%,
-      rgb(255 255 255 / 0.04) 32%,
-      rgb(255 255 255 / 0) 62%
-    );
-  mix-blend-mode: screen;
-  opacity: 0.92;
+  backdrop-filter: blur(8px) saturate(125%);
+  -webkit-backdrop-filter: blur(8px) saturate(125%);
 }
 
 .btn:hover,
 .btn:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(255, 255, 255, 0.42);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.5),
-    inset 0 -1px 0 rgb(255 255 255 / 0.08),
-    inset 1px 0 0 hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.18),
-    inset -1px 0 0 hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.22),
-    0 14px 30px rgb(0 0 0 / 0.24);
 }
 
 .btn-primary {
-  --btn-surface-top: 0.3;
-  --btn-surface-bottom: 0.12;
-  --btn-prism-warm: 0.15;
-  --btn-prism-cool: 0.22;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.21), rgba(255, 255, 255, 0.08));
 }
 
 .btn-ghost {
-  --btn-surface-top: 0.16;
-  --btn-surface-bottom: 0.05;
-  --btn-prism-warm: 0.09;
-  --btn-prism-cool: 0.13;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .project-card,
