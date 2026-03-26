@@ -435,6 +435,7 @@ img {
   backdrop-filter: blur(var(--glass-blur)) saturate(130%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
   box-shadow: var(--panel-shadow);
+  overflow: hidden;
 }
 
 .projects-carousel-frame,
@@ -443,11 +444,8 @@ img {
 }
 
 .projects-carousel-bottom {
-  display: block;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 6px;
-  scrollbar-width: thin;
+  display: flex;
+  justify-content: center;
 }
 
 .projects-carousel-viewport {
@@ -542,14 +540,19 @@ img {
 }
 
 .projects-carousel-dots {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: nowrap;
-  justify-content: center;
-  min-width: 100%;
-  width: max-content;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 6px;
   padding-inline: 4px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .projects-carousel-dot {
@@ -557,6 +560,7 @@ img {
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  flex: 0 0 auto;
   min-height: 40px;
   padding: 0 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1142,7 +1146,7 @@ img {
   }
 
   .projects-carousel-bottom {
-    padding-bottom: 4px;
+    justify-content: flex-start;
   }
 
   .projects-carousel-viewport {
@@ -1164,7 +1168,7 @@ img {
   }
 
   .projects-carousel-dots {
-    justify-content: flex-start;
+    padding-bottom: 4px;
   }
 }
 
