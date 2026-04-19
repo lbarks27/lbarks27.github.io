@@ -45,6 +45,15 @@
 
     root.innerHTML = "";
 
+    if (data.projects.length === 0) {
+      const placeholder = document.createElement("div");
+      placeholder.className = "placeholder";
+      placeholder.setAttribute("data-reveal", "");
+      placeholder.textContent = "Projects are temporarily unavailable while content loads. Refresh to try again.";
+      root.appendChild(placeholder);
+      return;
+    }
+
     data.projects.forEach((project) => {
       const card = document.createElement("a");
       card.className = "project-card";
@@ -97,6 +106,15 @@
       .slice(0, 3);
 
     root.innerHTML = "";
+
+    if (posts.length === 0) {
+      const placeholder = document.createElement("div");
+      placeholder.className = "placeholder";
+      placeholder.setAttribute("data-reveal", "");
+      placeholder.textContent = "Blog posts are temporarily unavailable while content loads. Refresh to try again.";
+      root.appendChild(placeholder);
+      return;
+    }
 
     posts.forEach((post) => {
       const card = document.createElement("article");
@@ -210,8 +228,8 @@
         effectiveScroll = Math.min(window.scrollY, stopScroll);
       }
 
-      const offset = Math.round(effectiveScroll * 0.18);
-      root.style.setProperty("--bg-parallax-y", offset + "px");
+      const offset = 50 + effectiveScroll * 0.018;
+      root.style.setProperty("--bg-image-y", offset.toFixed(2) + "%");
       ticking = false;
     }
 

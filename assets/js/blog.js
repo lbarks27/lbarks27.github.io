@@ -53,6 +53,21 @@
 
     root.innerHTML = "";
 
+    if (posts.length === 0) {
+      const placeholder = document.createElement("div");
+      placeholder.className = "placeholder";
+      placeholder.setAttribute("data-reveal", "");
+      placeholder.textContent = "Blog posts are temporarily unavailable while content loads. Refresh to try again.";
+      root.appendChild(placeholder);
+
+      if (window.installRevealAnimationsFromDynamicContent) {
+        window.installRevealAnimationsFromDynamicContent();
+      } else {
+        installRevealFallback();
+      }
+      return;
+    }
+
     posts.forEach((post) => {
       const article = document.createElement("article");
       article.className = "blog-row";

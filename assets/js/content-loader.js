@@ -324,11 +324,26 @@
     return documents;
   }
 
+  async function loadCollectionSafely(indexPath, folderPath, normalizer, label) {
+    try {
+      return await loadCollection(indexPath, folderPath, normalizer);
+    } catch (error) {
+      console.error("Failed to load " + label + " content.", error);
+      return [];
+    }
+  }
+
   async function loadPortfolioData() {
-    const siteData = await loadJson("content/site.json");
+    let siteData = {};
+    try {
+      siteData = await loadJson("content/site.json");
+    } catch (error) {
+      console.error("Failed to load site metadata.", error);
+    }
+
     const results = await Promise.all([
-      loadCollection("content/projects/index.json", "content/projects/", normalizeProject),
-      loadCollection("content/blog/index.json", "content/blog/", normalizeBlogPost)
+      loadCollectionSafely("content/projects/index.json", "content/projects/", normalizeProject, "projects"),
+      loadCollectionSafely("content/blog/index.json", "content/blog/", normalizeBlogPost, "blog")
     ]);
 
     return {

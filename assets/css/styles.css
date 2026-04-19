@@ -15,6 +15,7 @@
   --glass-blur: 12px;
   --panel-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
   --bg-parallax-y: 0px;
+  --bg-image-y: 50%;
 }
 
 * {
@@ -51,21 +52,16 @@ body > footer {
 body::after {
   content: "";
   position: fixed;
-  top: -18vh;
-  right: 0;
-  bottom: -18vh;
-  left: 0;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
   opacity: 0.78;
   background:
     linear-gradient(180deg, rgba(2, 3, 6, 0.06), rgba(2, 3, 6, 0.18)),
-    url("../images/user-star-field.jpeg") center center / cover no-repeat;
+    url("../images/user-star-field.jpeg") center var(--bg-image-y) / cover no-repeat;
   filter: hue-rotate(-10deg) contrast(156%) saturate(134%) brightness(1.04);
   mix-blend-mode: screen;
-  will-change: transform;
-  transform: translate3d(0, var(--bg-parallax-y), 0);
-  transform-origin: center top;
+  will-change: background-position;
   animation: starfieldPulseOpacity 10s ease-in-out infinite alternate;
 }
 
