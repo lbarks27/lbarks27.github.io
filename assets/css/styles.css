@@ -443,11 +443,8 @@ img {
 }
 
 .projects-carousel-bottom {
-  display: block;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 6px;
-  scrollbar-width: thin;
+  display: flex;
+  justify-content: center;
 }
 
 .projects-carousel-viewport {
@@ -542,14 +539,11 @@ img {
 }
 
 .projects-carousel-dots {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
-  min-width: 100%;
-  width: max-content;
-  padding-inline: 4px;
 }
 
 .projects-carousel-dot {
@@ -1142,7 +1136,7 @@ img {
   }
 
   .projects-carousel-bottom {
-    padding-bottom: 4px;
+    justify-content: flex-start;
   }
 
   .projects-carousel-viewport {
@@ -1164,7 +1158,11 @@ img {
   }
 
   .projects-carousel-dots {
+    flex-wrap: nowrap;
     justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    width: 100%;
   }
 }
 
