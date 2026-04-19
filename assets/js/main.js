@@ -203,7 +203,6 @@
     if (totalProjects > 1) {
       carousel.appendChild(bottomBar);
     }
-    carousel.classList.add("revealed");
     root.appendChild(carousel);
 
     function updateNavButton(button, previewNode, project, direction) {
