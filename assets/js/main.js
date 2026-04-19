@@ -60,8 +60,13 @@
     carousel.setAttribute("role", "region");
     carousel.setAttribute("aria-label", "Projects slideshow");
 
-    const frame = document.createElement("div");
-    frame.className = "projects-carousel-frame";
+    const topBar = document.createElement("div");
+    topBar.className = "projects-carousel-top";
+
+    const status = document.createElement("p");
+    status.className = "projects-carousel-status";
+    status.setAttribute("aria-live", "polite");
+    topBar.appendChild(status);
 
     const viewport = document.createElement("div");
     viewport.className = "projects-carousel-viewport";
@@ -79,39 +84,23 @@
     dotsRow.setAttribute("role", "group");
     dotsRow.setAttribute("aria-label", "Project slides");
 
-    let prevButton = null;
-    let nextButton = null;
-    let prevPreview = null;
-    let nextPreview = null;
-
     if (totalProjects > 1) {
-      prevButton = document.createElement("button");
-      prevButton.className = "projects-carousel-nav projects-carousel-nav-prev";
+      const controls = document.createElement("div");
+      controls.className = "projects-carousel-controls";
+
+      const prevButton = document.createElement("button");
+      prevButton.className = "projects-carousel-button";
       prevButton.type = "button";
       prevButton.setAttribute("aria-controls", "projects-carousel-track");
-      prevPreview = document.createElement("span");
-      prevPreview.className = "projects-carousel-nav-preview";
-      prevPreview.setAttribute("aria-hidden", "true");
-      const prevArrow = document.createElement("span");
-      prevArrow.className = "projects-carousel-nav-arrow";
-      prevArrow.setAttribute("aria-hidden", "true");
-      prevArrow.textContent = "<";
-      prevButton.appendChild(prevPreview);
-      prevButton.appendChild(prevArrow);
+      prevButton.setAttribute("aria-label", "Show previous project");
+      prevButton.textContent = "Prev";
 
-      nextButton = document.createElement("button");
-      nextButton.className = "projects-carousel-nav projects-carousel-nav-next";
+      const nextButton = document.createElement("button");
+      nextButton.className = "projects-carousel-button";
       nextButton.type = "button";
       nextButton.setAttribute("aria-controls", "projects-carousel-track");
-      nextPreview = document.createElement("span");
-      nextPreview.className = "projects-carousel-nav-preview";
-      nextPreview.setAttribute("aria-hidden", "true");
-      const nextArrow = document.createElement("span");
-      nextArrow.className = "projects-carousel-nav-arrow";
-      nextArrow.setAttribute("aria-hidden", "true");
-      nextArrow.textContent = ">";
-      nextButton.appendChild(nextPreview);
-      nextButton.appendChild(nextArrow);
+      nextButton.setAttribute("aria-label", "Show next project");
+      nextButton.textContent = "Next";
 
       prevButton.addEventListener("click", function () {
         setActiveSlide(activeIndex - 1);
@@ -121,8 +110,9 @@
         setActiveSlide(activeIndex + 1);
       });
 
-      frame.appendChild(prevButton);
-      frame.appendChild(nextButton);
+      controls.appendChild(prevButton);
+      controls.appendChild(nextButton);
+      topBar.appendChild(controls);
 
       carousel.addEventListener("keydown", function (event) {
         if (event.key === "ArrowLeft") {
@@ -162,14 +152,24 @@
       const content = document.createElement("div");
       content.className = "project-card-content";
 
+      const meta = document.createElement("span");
+      meta.className = "project-card-meta";
+      meta.textContent = "Project " + String(projectIndex + 1).padStart(2, "0");
+
       const title = document.createElement("h3");
       title.textContent = project.title;
 
       const summary = document.createElement("p");
       summary.textContent = project.tagline || "Open the project page for implementation details and results.";
 
+      const cta = document.createElement("span");
+      cta.className = "project-card-cta";
+      cta.textContent = "Open Project";
+
+      content.appendChild(meta);
       content.appendChild(title);
       content.appendChild(summary);
+      content.appendChild(cta);
       card.appendChild(content);
       slide.appendChild(card);
       track.appendChild(slide);
@@ -181,14 +181,6 @@
         dot.className = "projects-carousel-dot";
         dot.type = "button";
         dot.setAttribute("aria-label", "Show " + project.title);
-        const marker = document.createElement("span");
-        marker.className = "projects-carousel-dot-marker";
-        marker.setAttribute("aria-hidden", "true");
-        const label = document.createElement("span");
-        label.className = "projects-carousel-dot-label";
-        label.textContent = project.title;
-        dot.appendChild(marker);
-        dot.appendChild(label);
         dot.addEventListener("click", function () {
           setActiveSlide(projectIndex);
         });
@@ -198,38 +190,23 @@
     });
 
     bottomBar.appendChild(dotsRow);
-    frame.appendChild(viewport);
-    carousel.appendChild(frame);
+    carousel.appendChild(topBar);
+    carousel.appendChild(viewport);
     if (totalProjects > 1) {
       carousel.appendChild(bottomBar);
     }
     root.appendChild(carousel);
 
-    function updateNavButton(button, previewNode, project, direction) {
-      if (!button || !previewNode || !project) {
-        return;
-      }
-
-      button.setAttribute("aria-label", "Show " + direction + " project: " + project.title);
-      button.setAttribute("title", project.title);
-
-      if (project.iconOverlay) {
-        previewNode.style.backgroundImage =
-          "linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)), " +
-          "linear-gradient(180deg, rgba(2, 4, 8, 0.16), rgba(2, 4, 8, 0.7)), " +
-          "url(" +
-          project.iconOverlay +
-          ")";
-        button.removeAttribute("data-empty");
-      } else {
-        previewNode.style.backgroundImage = "";
-        button.setAttribute("data-empty", "true");
-      }
-    }
-
     function setActiveSlide(nextIndex) {
       activeIndex = (nextIndex + totalProjects) % totalProjects;
       track.style.transform = "translateX(-" + activeIndex * 100 + "%)";
+      status.textContent =
+        "Project " +
+        String(activeIndex + 1).padStart(2, "0") +
+        " / " +
+        String(totalProjects).padStart(2, "0") +
+        " - " +
+        data.projects[activeIndex].title;
 
       slides.forEach((slide, slideIndex) => {
         const isActive = slideIndex === activeIndex;
@@ -238,20 +215,10 @@
         cards[slideIndex].tabIndex = isActive ? 0 : -1;
       });
 
-      if (totalProjects > 1) {
-        updateNavButton(prevButton, prevPreview, data.projects[(activeIndex - 1 + totalProjects) % totalProjects], "previous");
-        updateNavButton(nextButton, nextPreview, data.projects[(activeIndex + 1) % totalProjects], "next");
-      }
-
       dots.forEach((dot, dotIndex) => {
         const isActive = dotIndex === activeIndex;
         dot.classList.toggle("is-active", isActive);
         dot.setAttribute("aria-pressed", isActive ? "true" : "false");
-        if (isActive) {
-          dot.setAttribute("aria-current", "true");
-        } else {
-          dot.removeAttribute("aria-current");
-        }
       });
     }
 
