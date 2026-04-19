@@ -45,97 +45,10 @@
 
     root.innerHTML = "";
 
-    if (data.projects.length === 0) {
-      return;
-    }
-
-    const totalProjects = data.projects.length;
-    let activeIndex = 0;
-    const slides = [];
-    const cards = [];
-    const dots = [];
-    const carousel = document.createElement("section");
-    carousel.className = "projects-carousel";
-    carousel.setAttribute("data-reveal", "");
-    carousel.setAttribute("role", "region");
-    carousel.setAttribute("aria-label", "Projects slideshow");
-
-    const topBar = document.createElement("div");
-    topBar.className = "projects-carousel-top";
-
-    const status = document.createElement("p");
-    status.className = "projects-carousel-status";
-    status.setAttribute("aria-live", "polite");
-    topBar.appendChild(status);
-
-    const viewport = document.createElement("div");
-    viewport.className = "projects-carousel-viewport";
-
-    const track = document.createElement("div");
-    track.className = "projects-carousel-track";
-    track.id = "projects-carousel-track";
-    viewport.appendChild(track);
-
-    const bottomBar = document.createElement("div");
-    bottomBar.className = "projects-carousel-bottom";
-
-    const dotsRow = document.createElement("div");
-    dotsRow.className = "projects-carousel-dots";
-    dotsRow.setAttribute("role", "group");
-    dotsRow.setAttribute("aria-label", "Project slides");
-
-    if (totalProjects > 1) {
-      const controls = document.createElement("div");
-      controls.className = "projects-carousel-controls";
-
-      const prevButton = document.createElement("button");
-      prevButton.className = "projects-carousel-button";
-      prevButton.type = "button";
-      prevButton.setAttribute("aria-controls", "projects-carousel-track");
-      prevButton.setAttribute("aria-label", "Show previous project");
-      prevButton.textContent = "Prev";
-
-      const nextButton = document.createElement("button");
-      nextButton.className = "projects-carousel-button";
-      nextButton.type = "button";
-      nextButton.setAttribute("aria-controls", "projects-carousel-track");
-      nextButton.setAttribute("aria-label", "Show next project");
-      nextButton.textContent = "Next";
-
-      prevButton.addEventListener("click", function () {
-        setActiveSlide(activeIndex - 1);
-      });
-
-      nextButton.addEventListener("click", function () {
-        setActiveSlide(activeIndex + 1);
-      });
-
-      controls.appendChild(prevButton);
-      controls.appendChild(nextButton);
-      topBar.appendChild(controls);
-
-      carousel.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowLeft") {
-          event.preventDefault();
-          setActiveSlide(activeIndex - 1);
-        }
-
-        if (event.key === "ArrowRight") {
-          event.preventDefault();
-          setActiveSlide(activeIndex + 1);
-        }
-      });
-    }
-
-    data.projects.forEach((project, projectIndex) => {
-      const slide = document.createElement("article");
-      slide.className = "project-slide";
-      slide.setAttribute("role", "group");
-      slide.setAttribute("aria-roledescription", "slide");
-      slide.setAttribute("aria-label", project.title + " (" + (projectIndex + 1) + " of " + totalProjects + ")");
-
+    data.projects.forEach((project) => {
       const card = document.createElement("a");
-      card.className = "project-card project-card-slide";
+      card.className = "project-card";
+      card.setAttribute("data-reveal", "");
       card.href = "project.html?id=" + encodeURIComponent(project.id);
       card.setAttribute("aria-label", "Open " + project.title + " project page");
 
@@ -152,77 +65,17 @@
       const content = document.createElement("div");
       content.className = "project-card-content";
 
-      const meta = document.createElement("span");
-      meta.className = "project-card-meta";
-      meta.textContent = "Project " + String(projectIndex + 1).padStart(2, "0");
-
       const title = document.createElement("h3");
       title.textContent = project.title;
 
       const summary = document.createElement("p");
-      summary.textContent = project.tagline || "Open the project page for implementation details and results.";
+      summary.textContent = project.tagline;
 
-      const cta = document.createElement("span");
-      cta.className = "project-card-cta";
-      cta.textContent = "Open Project";
-
-      content.appendChild(meta);
       content.appendChild(title);
       content.appendChild(summary);
-      content.appendChild(cta);
       card.appendChild(content);
-      slide.appendChild(card);
-      track.appendChild(slide);
-      slides.push(slide);
-      cards.push(card);
-
-      if (totalProjects > 1) {
-        const dot = document.createElement("button");
-        dot.className = "projects-carousel-dot";
-        dot.type = "button";
-        dot.setAttribute("aria-label", "Show " + project.title);
-        dot.addEventListener("click", function () {
-          setActiveSlide(projectIndex);
-        });
-        dotsRow.appendChild(dot);
-        dots.push(dot);
-      }
+      root.appendChild(card);
     });
-
-    bottomBar.appendChild(dotsRow);
-    carousel.appendChild(topBar);
-    carousel.appendChild(viewport);
-    if (totalProjects > 1) {
-      carousel.appendChild(bottomBar);
-    }
-    root.appendChild(carousel);
-
-    function setActiveSlide(nextIndex) {
-      activeIndex = (nextIndex + totalProjects) % totalProjects;
-      track.style.transform = "translateX(-" + activeIndex * 100 + "%)";
-      status.textContent =
-        "Project " +
-        String(activeIndex + 1).padStart(2, "0") +
-        " / " +
-        String(totalProjects).padStart(2, "0") +
-        " - " +
-        data.projects[activeIndex].title;
-
-      slides.forEach((slide, slideIndex) => {
-        const isActive = slideIndex === activeIndex;
-        slide.classList.toggle("is-active", isActive);
-        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
-        cards[slideIndex].tabIndex = isActive ? 0 : -1;
-      });
-
-      dots.forEach((dot, dotIndex) => {
-        const isActive = dotIndex === activeIndex;
-        dot.classList.toggle("is-active", isActive);
-        dot.setAttribute("aria-pressed", isActive ? "true" : "false");
-      });
-    }
-
-    setActiveSlide(0);
   }
 
   function renderBlogPreview(data) {
