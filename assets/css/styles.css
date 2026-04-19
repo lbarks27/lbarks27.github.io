@@ -1,11 +1,11 @@
 :root {
   --bg: #040507;
   --bg-soft: #0a0d12;
-  --bg-panel: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
-  --bg-panel-soft: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  --bg-panel: linear-gradient(145deg, rgba(11, 16, 24, 0.9), rgba(20, 26, 38, 0.72));
+  --bg-panel-soft: linear-gradient(145deg, rgba(14, 19, 28, 0.78), rgba(24, 30, 43, 0.58));
   --ink: #f5f7fa;
   --muted: #9ca6b7;
-  --line: rgba(255, 255, 255, 0.22);
+  --line: rgba(255, 255, 255, 0.3);
   --accent: #ffffff;
   --accent-soft: rgba(255, 255, 255, 0.7);
   --max-width: 1140px;
@@ -13,35 +13,8 @@
   --radius-sm: 6px;
   --radius-md: 9px;
   --glass-blur: 12px;
-  --panel-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-  --fx-scroll: 0;
-  --fx-scan-x: 0px;
-  --fx-scan-y: 0px;
-  --fx-flicker: 1;
-  --fx-source-x: -18vw;
-  --fx-source-y: -14vh;
-  --fx-core-x: 50vw;
-  --fx-core-y: 56vh;
-  --fx-ghost-x: 78vw;
-  --fx-ghost-y: 62vh;
-  --fx-ghost2-x: 38vw;
-  --fx-ghost2-y: 47vh;
-  --fx-lens-alpha: 0.42;
-  --fx-beam-angle: 136deg;
-  --fx-spectrum-shift: 0deg;
-  --fx-spectrum-saturation: 176%;
-  --fx-warm-h: 22;
-  --fx-warm-s: 92%;
-  --fx-warm-l: 66%;
-  --fx-cool-h: 204;
-  --fx-cool-s: 88%;
-  --fx-cool-l: 72%;
-  --fx-ice-h: 188;
-  --fx-ice-s: 46%;
-  --fx-ice-l: 92%;
-  --fx-deep-h: 226;
-  --fx-deep-s: 78%;
-  --fx-deep-l: 62%;
+  --panel-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+  --bg-parallax-y: 0px;
 }
 
 * {
@@ -56,6 +29,7 @@ body {
 }
 
 body {
+  position: relative;
   font-family: "Space Grotesk", sans-serif;
   background:
     radial-gradient(circle at 10% 15%, rgba(255, 255, 255, 0.08), transparent 42%),
@@ -67,163 +41,48 @@ body {
   isolation: isolate;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.1) 0,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.1) 1px,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.06) 1px,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.06) 2px,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.1) 2px,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.1) 3px,
-      rgba(8, 10, 14, 0.03) 3px,
-      rgba(8, 10, 14, 0.03) 4px
-    ),
-    repeating-linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.03) 0,
-      rgba(255, 255, 255, 0.03) 1px,
-      rgba(255, 255, 255, 0) 1px,
-      rgba(255, 255, 255, 0) 5px
-    );
-  opacity: calc(0.21 * var(--fx-flicker));
-  mix-blend-mode: screen;
-  filter: hue-rotate(var(--fx-spectrum-shift));
-  transform: translate3d(var(--fx-scan-x), var(--fx-scan-y), 0);
+body > header,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 1;
 }
 
 body::after {
   content: "";
   position: fixed;
-  inset: -14vh -14vw;
+  top: -18vh;
+  right: 0;
+  bottom: -18vh;
+  left: 0;
   pointer-events: none;
-  z-index: -1;
-  opacity: calc(0.16 + (var(--fx-scroll) * 0.34));
+  z-index: 0;
+  opacity: 0.78;
   background:
-    radial-gradient(
-      36vmax 34vmax at var(--fx-source-x) var(--fx-source-y),
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.36),
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.26) 26%,
-      rgba(0, 0, 0, 0) 64%
-    ),
-    conic-gradient(
-      from calc(var(--fx-beam-angle) - 26deg) at var(--fx-source-x) var(--fx-source-y),
-      rgba(0, 0, 0, 0) 0deg,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.58) 10deg,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.84) 18deg,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.66) 26deg,
-      hsl(var(--fx-deep-h) var(--fx-deep-s) var(--fx-deep-l) / 0.44) 34deg,
-      rgba(0, 0, 0, 0) 54deg,
-      rgba(0, 0, 0, 0) 360deg
-    ),
-    radial-gradient(
-      26vmax 22vmax at var(--fx-core-x) var(--fx-core-y),
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.66),
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.36) 34%,
-      hsl(var(--fx-deep-h) var(--fx-deep-s) var(--fx-deep-l) / 0.18) 56%,
-      rgba(0, 0, 0, 0) 76%
-    ),
-    linear-gradient(
-      var(--fx-beam-angle),
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0) 27%,
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.36) 42%,
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.86) 50%,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.54) 58%,
-      hsl(var(--fx-deep-h) var(--fx-deep-s) var(--fx-deep-l) / 0.24) 66%,
-      rgba(0, 0, 0, 0) 76%
-    );
-  filter: blur(30px) saturate(var(--fx-spectrum-saturation)) hue-rotate(var(--fx-spectrum-shift));
+    linear-gradient(180deg, rgba(2, 3, 6, 0.06), rgba(2, 3, 6, 0.18)),
+    url("../images/user-star-field.jpeg") center center / cover no-repeat;
+  filter: hue-rotate(-10deg) contrast(156%) saturate(134%) brightness(1.04);
   mix-blend-mode: screen;
-  transform: translateZ(0);
+  will-change: transform;
+  transform: translate3d(0, var(--bg-parallax-y), 0);
+  transform-origin: center top;
+  animation: starfieldPulseOpacity 10s ease-in-out infinite alternate;
 }
 
-.fx-lens-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 120;
-  opacity: calc(var(--fx-lens-alpha) * var(--fx-flicker));
-  mix-blend-mode: screen;
-  contain: strict;
-}
+@keyframes starfieldPulseOpacity {
+  0% {
+    opacity: 0.72;
+  }
 
-.fx-lens-overlay::before,
-.fx-lens-overlay::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.fx-lens-overlay::before {
-  background:
-    radial-gradient(
-      24vmax 24vmax at var(--fx-source-x) var(--fx-source-y),
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.26),
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.14) 24%,
-      rgba(0, 0, 0, 0) 70%
-    ),
-    radial-gradient(
-      10vmax 10vmax at var(--fx-ghost-x) var(--fx-ghost-y),
-      hsl(var(--fx-warm-h) var(--fx-warm-s) var(--fx-warm-l) / 0.23),
-      hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.11) 34%,
-      rgba(0, 0, 0, 0) 72%
-    ),
-    radial-gradient(
-      6vmax 6vmax at var(--fx-ghost2-x) var(--fx-ghost2-y),
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.2),
-      rgba(0, 0, 0, 0) 74%
-    );
-  opacity: 0.84;
-}
-
-.fx-lens-overlay::after {
-  background:
-    radial-gradient(
-      92vmax 92vmax at 50% 50%,
-      rgba(255, 255, 255, 0) 58%,
-      hsl(var(--fx-cool-h) var(--fx-cool-s) var(--fx-cool-l) / 0.08) 65%,
-      rgba(0, 0, 0, 0) 72%
-    ),
-    radial-gradient(
-      140% 130% at 50% 50%,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0.12) 100%
-    );
-  opacity: calc(0.34 + (var(--fx-scroll) * 0.22));
-}
-
-.fx-lens-overlay[data-quality="lite"] {
-  mix-blend-mode: normal;
-  opacity: calc(var(--fx-lens-alpha) * 0.72);
-}
-
-.fx-lens-overlay[data-quality="lite"]::before {
-  background: radial-gradient(
-    22vmax 22vmax at var(--fx-source-x) var(--fx-source-y),
-    hsl(var(--fx-ice-h) var(--fx-ice-s) var(--fx-ice-l) / 0.17),
-    rgba(0, 0, 0, 0) 72%
-  );
-}
-
-.fx-lens-overlay[data-quality="lite"]::after {
-  display: none;
+  100% {
+    opacity: 0.92;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fx-lens-overlay {
-    mix-blend-mode: normal;
-    opacity: calc(var(--fx-lens-alpha) * 0.62);
-  }
-
-  .fx-lens-overlay::after {
-    display: none;
+  body::after {
+    animation: none;
+    opacity: 0.82;
   }
 }
 
@@ -286,10 +145,11 @@ img {
 }
 
 .site-header.scrolled {
-  background: rgba(5, 8, 12, 0.56);
+  background: rgba(7, 11, 18, 0.78);
   border-color: var(--line);
-  backdrop-filter: blur(10px) saturate(130%);
-  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 
 .header-wrap {
@@ -359,13 +219,15 @@ img {
   text-transform: uppercase;
   line-height: 0.95;
   font-size: clamp(3.2rem, 13vw, 7.5rem);
+  text-shadow: 0 10px 34px rgba(0, 0, 0, 0.42);
 }
 
 .hero-subtitle {
   margin: 0;
   max-width: 58ch;
-  color: var(--muted);
+  color: rgba(230, 236, 246, 0.88);
   font-size: clamp(1rem, 2.5vw, 1.24rem);
+  text-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
 }
 
 .hero-actions {
@@ -385,24 +247,26 @@ img {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-size: 0.84rem;
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   border-radius: var(--radius-sm);
-  backdrop-filter: blur(8px) saturate(125%);
-  -webkit-backdrop-filter: blur(8px) saturate(125%);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
 }
 
 .btn:hover,
 .btn:focus-visible {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.42);
+  border-color: rgba(255, 255, 255, 0.56);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.21), rgba(255, 255, 255, 0.08));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12));
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(10, 14, 21, 0.52);
 }
 
 .project-card,
@@ -443,7 +307,8 @@ img {
 .project-card:hover,
 .project-card:focus-visible {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.42);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.38);
 }
 
 .project-card-content {
@@ -552,6 +417,7 @@ img {
   padding: 22px;
   display: grid;
   gap: 20px;
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.3);
 }
 
 .resume-list {
@@ -591,6 +457,7 @@ img {
   padding: 18px;
   display: grid;
   gap: 10px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .blog-card h3 {
@@ -640,6 +507,7 @@ img {
   border: 1px solid var(--line);
   background: var(--bg-panel);
   padding: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .contact-card h3 {
@@ -662,9 +530,9 @@ img {
 
 .site-footer {
   border-top: 1px solid var(--line);
-  background: rgba(5, 8, 12, 0.56);
-  backdrop-filter: blur(10px) saturate(130%);
-  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  background: rgba(7, 11, 18, 0.76);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
   padding: 26px 0 40px;
   color: var(--muted);
   font-size: 0.88rem;
@@ -707,6 +575,7 @@ img {
   border: 1px solid var(--line);
   background: var(--bg-panel);
   padding: 20px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.3);
 }
 
 .panel h2 {
@@ -901,6 +770,7 @@ img {
   padding: 18px;
   display: grid;
   gap: 8px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .blog-row h2 {
