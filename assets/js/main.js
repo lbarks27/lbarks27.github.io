@@ -37,115 +37,106 @@
     }
   }
 
-  function renderProjects(data) {
-    const root = document.querySelector("[data-projects-root]");
-    if (!root || !data || !Array.isArray(data.projects)) {
+  function renderPosts(data) {
+    const root = document.querySelector("[data-posts-root]");
+    if (!root || !data) {
       return;
     }
 
-    root.innerHTML = "";
-
-    if (data.projects.length === 0) {
-      const placeholder = document.createElement("div");
-      placeholder.className = "placeholder";
-      placeholder.setAttribute("data-reveal", "");
-      placeholder.textContent = "Projects are temporarily unavailable while content loads. Refresh to try again.";
-      root.appendChild(placeholder);
-      return;
-    }
-
-    data.projects.forEach((project) => {
-      const card = document.createElement("a");
-      card.className = "project-card";
-      card.setAttribute("data-reveal", "");
-      card.href = "project.html?id=" + encodeURIComponent(project.id);
-      card.setAttribute("aria-label", "Open " + project.title + " project page");
-
-      if (project.iconOverlay) {
-        card.classList.add("project-card-has-overlay");
-        const cardOverlay = document.createElement("img");
-        cardOverlay.className = "project-card-overlay";
-        cardOverlay.src = project.iconOverlay;
-        cardOverlay.alt = project.iconOverlayAlt || project.title + " project image";
-        cardOverlay.loading = "lazy";
-        card.appendChild(cardOverlay);
-      }
-
-      const content = document.createElement("div");
-      content.className = "project-card-content";
-
-      const title = document.createElement("h3");
-      title.textContent = project.title;
-
-      const summary = document.createElement("p");
-      summary.textContent = project.tagline;
-
-      content.appendChild(title);
-      content.appendChild(summary);
-      card.appendChild(content);
-      root.appendChild(card);
-    });
-  }
-
-  function renderBlogPreview(data) {
-    const root = document.querySelector("[data-blog-preview-root]");
-    if (!root || !data || !Array.isArray(data.blogPosts)) {
-      return;
-    }
-
+    const projects = Array.isArray(data.projects) ? data.projects : [];
+    const blogPosts = Array.isArray(data.blogPosts) ? data.blogPosts : [];
     const parseIsoDate = getDateParser();
     const formatter = new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric"
     });
+    const projectById = new Map(projects.map((project) => [project.id, project]));
 
-    const posts = data.blogPosts
-      .slice()
-      .sort((a, b) => parseIsoDate(b.date).getTime() - parseIsoDate(a.date).getTime())
-      .slice(0, 3);
+    function dateTime(value) {
+      const time = parseIsoDate(value).getTime();
+      return Number.isFinite(time) ? time : null;
+    }
+
+    const projectItems = projects.map((project, index) => ({
+      type: "Project Deep Dive",
+      title: project.title,
+      summary: project.tagline,
+      href: "project.html?id=" + encodeURIComponent(project.id),
+      image: project.iconOverlay,
+      imageAlt: project.iconOverlayAlt || project.title + " project image",
+      sortTime: dateTime(project.date) || Date.UTC(2026, 0, 1) - index * 60000,
+      sourceIndex: index
+    }));
+
+    const blogItems = blogPosts.map((post, index) => {
+      const relatedProject = projectById.get(post.relatedProject);
+      return {
+        type: "Blog Post",
+        title: post.title,
+        summary: post.excerpt,
+        href: "blog.html#" + encodeURIComponent(post.id),
+        image: relatedProject ? relatedProject.iconOverlay : "",
+        imageAlt: relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "",
+        date: post.date,
+        sortTime: dateTime(post.date) || Date.UTC(2025, 0, 1) - index * 60000,
+        sourceIndex: projects.length + index
+      };
+    });
 
     root.innerHTML = "";
 
-    if (posts.length === 0) {
+    if (projects.length === 0 && blogPosts.length === 0) {
       const placeholder = document.createElement("div");
       placeholder.className = "placeholder";
       placeholder.setAttribute("data-reveal", "");
-      placeholder.textContent = "Blog posts are temporarily unavailable while content loads. Refresh to try again.";
+      placeholder.textContent = "Posts are temporarily unavailable while content loads. Refresh to try again.";
       root.appendChild(placeholder);
       return;
     }
 
-    posts.forEach((post) => {
-      const card = document.createElement("article");
-      card.className = "blog-card";
-      card.setAttribute("data-reveal", "");
+    projectItems
+      .concat(blogItems)
+      .sort((a, b) => b.sortTime - a.sortTime || a.sourceIndex - b.sourceIndex)
+      .slice(0, 8)
+      .forEach((item) => {
+        const card = document.createElement("a");
+        card.className = "post-showcase-card";
+        card.setAttribute("data-reveal", "");
+        card.href = item.href;
+        card.setAttribute("aria-label", "Open " + item.title);
 
-      const meta = document.createElement("p");
-      meta.className = "blog-meta";
-      meta.textContent = formatter.format(parseIsoDate(post.date));
+        if (item.image) {
+          card.classList.add("post-showcase-card-has-image");
+          const cardOverlay = document.createElement("img");
+          cardOverlay.className = "post-showcase-card-image";
+          cardOverlay.src = item.image;
+          cardOverlay.alt = item.imageAlt || "";
+          cardOverlay.loading = "lazy";
+          card.appendChild(cardOverlay);
+        } else {
+          card.classList.add("post-showcase-card-no-image");
+        }
 
-      const title = document.createElement("h3");
-      title.textContent = post.title;
+        const content = document.createElement("div");
+        content.className = "post-showcase-card-content";
 
-      const excerpt = document.createElement("p");
-      excerpt.textContent = post.excerpt;
+        const label = document.createElement("span");
+        label.className = "post-card-label";
+        label.textContent = item.date ? item.type + " / " + formatter.format(parseIsoDate(item.date)) : item.type;
 
-      const tagRow = document.createElement("div");
-      tagRow.className = "tags";
-      (post.tags || []).forEach((tag) => {
-        const tagNode = document.createElement("span");
-        tagNode.className = "tag";
-        tagNode.textContent = tag;
-        tagRow.appendChild(tagNode);
+        const title = document.createElement("h3");
+        title.textContent = item.title;
+
+        const summary = document.createElement("p");
+        summary.textContent = item.summary;
+
+        content.appendChild(label);
+        content.appendChild(title);
+        content.appendChild(summary);
+        card.appendChild(content);
+        root.appendChild(card);
       });
-
-      card.appendChild(meta);
-      card.appendChild(title);
-      card.appendChild(excerpt);
-      card.appendChild(tagRow);
-      root.appendChild(card);
-    });
   }
 
   function installHeaderBehavior() {
@@ -260,8 +251,7 @@
   async function init() {
     const data = await window.PORTFOLIO_DATA_READY;
     setOwnerFields(data);
-    renderProjects(data);
-    renderBlogPreview(data);
+    renderPosts(data);
     installHeaderBehavior();
     installRevealAnimations();
     installBackgroundParallax();

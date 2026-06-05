@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Posts | Liam Barkley</title>
-    <meta name="description" content="Project deep dives and blog updates for Liam Barkley.">
+    <title>Contact | Liam Barkley</title>
+    <meta name="description" content="Contact links for Liam Barkley.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,21 +23,33 @@
       </div>
     </header>
 
-    <main class="blog-shell">
+    <main class="project-shell">
       <section class="blog-hero">
         <div class="container">
-          <p class="section-kicker" data-reveal>Posts</p>
-          <h1 class="blog-title" data-reveal>Projects and Updates</h1>
+          <p class="section-kicker" data-reveal>Contact</p>
+          <h1 class="blog-title" data-reveal>Get In Touch</h1>
           <p class="project-tagline" data-reveal>
-            Full archive of project deep dives, milestones, and progress notes.
+            Direct links for follow-ups, code review, project demos, and technical conversations.
           </p>
-          <a class="back-link" href="index.html#posts" data-reveal>Back to posts</a>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <div class="blog-list" data-blog-root></div>
+          <div class="contact-grid">
+            <article class="contact-card" data-reveal>
+              <h3>Email</h3>
+              <a data-owner-email href="mailto:your-email@example.com">your-email@example.com</a>
+            </article>
+            <article class="contact-card" data-reveal>
+              <h3>GitHub</h3>
+              <a data-owner-github href="https://github.com/lbarks27" target="_blank" rel="noreferrer">https://github.com/lbarks27</a>
+            </article>
+            <article class="contact-card" data-reveal>
+              <h3>YouTube</h3>
+              <a data-owner-youtube href="https://www.youtube.com/@lbarks27" target="_blank" rel="noreferrer">https://www.youtube.com/@lbarks27</a>
+            </article>
+          </div>
         </div>
       </section>
     </main>
@@ -45,13 +57,12 @@
     <footer class="site-footer">
       <div class="container">
         <p>
-          © <span data-year></span> <span data-owner-name>Liam Barkley</span>. Posts archive.
+          © <span data-year></span> <span data-owner-name>Liam Barkley</span>. Contact.
         </p>
       </div>
     </footer>
 
     <script src="assets/js/content-loader.js?v=20260521-2"></script>
     <script src="assets/js/main.js?v=20260521-2"></script>
-    <script src="assets/js/blog.js?v=20260521-3"></script>
   </body>
 </html>

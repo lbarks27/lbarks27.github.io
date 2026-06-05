@@ -270,6 +270,7 @@
     return {
       id: String(attributes.id || ""),
       title: String(attributes.title || ""),
+      date: String(attributes.date || ""),
       tagline: String(attributes.tagline || ""),
       summary: sections.Overview || String(attributes.summary || ""),
       solverApproach: sections["Solver Deep Dive"] || String(attributes.solverApproach || ""),

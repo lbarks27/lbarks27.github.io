@@ -35,7 +35,7 @@
   async function init() {
     const data = await window.PORTFOLIO_DATA_READY;
     const root = document.querySelector("[data-blog-root]");
-    if (!root || !data || !Array.isArray(data.blogPosts)) {
+    if (!root || !data) {
       return;
     }
 
@@ -46,10 +46,36 @@
       day: "numeric"
     });
 
-    const projectById = new Map((data.projects || []).map((project) => [project.id, project]));
-    const posts = data.blogPosts
-      .slice()
-      .sort((a, b) => utils.parseIsoDate(b.date).getTime() - utils.parseIsoDate(a.date).getTime());
+    const projects = Array.isArray(data.projects) ? data.projects : [];
+    const blogPosts = Array.isArray(data.blogPosts) ? data.blogPosts : [];
+    const projectById = new Map(projects.map((project) => [project.id, project]));
+    const projectItems = projects.map((project, index) => ({
+      id: "project-" + project.id,
+      type: "Project Deep Dive",
+      title: project.title,
+      excerpt: project.tagline,
+      href: "project.html?id=" + encodeURIComponent(project.id),
+      tags: [],
+      content: "",
+      sortTime: Date.UTC(2026, 0, 1) - index * 60000,
+      sourceIndex: index
+    }));
+    const blogItems = blogPosts.map((post, index) => ({
+      id: post.id,
+      type: "Blog Post",
+      title: post.title,
+      excerpt: post.excerpt,
+      href: "blog.html#" + encodeURIComponent(post.id),
+      tags: post.tags || [],
+      content: post.content || "",
+      date: post.date,
+      relatedProject: post.relatedProject,
+      sortTime: utils.parseIsoDate(post.date).getTime(),
+      sourceIndex: projects.length + index
+    }));
+    const posts = blogItems
+      .concat(projectItems)
+      .sort((a, b) => b.sortTime - a.sortTime || a.sourceIndex - b.sourceIndex);
 
     root.innerHTML = "";
 
@@ -57,7 +83,7 @@
       const placeholder = document.createElement("div");
       placeholder.className = "placeholder";
       placeholder.setAttribute("data-reveal", "");
-      placeholder.textContent = "Blog posts are temporarily unavailable while content loads. Refresh to try again.";
+      placeholder.textContent = "Posts are temporarily unavailable while content loads. Refresh to try again.";
       root.appendChild(placeholder);
 
       if (window.installRevealAnimationsFromDynamicContent) {
@@ -76,7 +102,7 @@
 
       const meta = document.createElement("p");
       meta.className = "blog-meta";
-      meta.textContent = formatter.format(utils.parseIsoDate(post.date));
+      meta.textContent = post.date ? post.type + " / " + formatter.format(utils.parseIsoDate(post.date)) : post.type;
 
       const title = document.createElement("h2");
       title.textContent = post.title;
@@ -105,7 +131,13 @@
         article.appendChild(body);
       }
 
-      if (post.relatedProject && projectById.has(post.relatedProject)) {
+      if (post.type === "Project Deep Dive") {
+        const link = document.createElement("a");
+        link.className = "back-link";
+        link.href = post.href;
+        link.textContent = "Open project deep dive";
+        article.appendChild(link);
+      } else if (post.relatedProject && projectById.has(post.relatedProject)) {
         const project = projectById.get(post.relatedProject);
         const link = document.createElement("a");
         link.className = "back-link";

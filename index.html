@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Liam Barkley | Portfolio</title>
-    <meta name="description" content="Engineering portfolio for Liam Barkley with project deep dives, resume, blog updates, and contact details.">
+    <meta name="description" content="Engineering portfolio for Liam Barkley with project deep dives, blog updates, resume, and contact details.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,10 +16,9 @@
         <a class="brand" href="#home">Liam Barkley</a>
         <button class="menu-toggle" data-menu-toggle type="button" aria-label="Toggle menu">Menu</button>
         <nav class="nav-links" data-nav-links>
-          <a href="#projects">Projects</a>
-          <a href="#resume">Resume</a>
-          <a href="#blog">Blog</a>
-          <a href="#contact">Contact</a>
+          <a href="#posts">Posts</a>
+          <a href="resume.html">Resume</a>
+          <a href="contact.html">Contact</a>
         </nav>
       </div>
     </header>
@@ -33,91 +32,25 @@
             BARKLEY
           </h1>
           <p class="hero-subtitle" data-reveal>
-            Controls, simulation, and systems engineering projects. High-level updates live in the blog, while full solver breakdowns live in each project page.
+            Controls, simulation, and systems engineering work, with concise build notes alongside project deep dives.
           </p>
-          <div class="hero-actions" data-reveal>
-            <a class="btn btn-primary" href="#projects">Explore Projects</a>
-            <a class="btn btn-ghost" href="#resume">View Resume</a>
-          </div>
         </div>
       </section>
 
-      <section class="section" id="projects">
+      <div class="front-page-divider" aria-hidden="true"></div>
+
+      <section class="section" id="posts">
         <div class="container">
-          <p class="section-kicker" data-reveal>Projects</p>
-          <p class="section-lead" data-reveal>
-            Each project page supports photos, video demos, GitHub links, solver explanations, and data/result sections.
-          </p>
-          <div class="projects-grid" data-projects-root></div>
+          <span class="anchor-alias" id="projects" aria-hidden="true"></span>
+          <span class="anchor-alias" id="blog" aria-hidden="true"></span>
+          <p class="section-kicker" data-reveal>Posts Preview</p>
+          <div class="section-actions" data-reveal>
+            <a class="btn btn-ghost" href="blog.html">Open Full Blog</a>
+          </div>
+          <div class="posts-grid" data-posts-root></div>
         </div>
       </section>
 
-      <section class="section" id="resume">
-        <div class="container">
-          <p class="section-kicker" data-reveal>Resume</p>
-          <p class="section-lead" data-reveal>
-            Keep this section outcome-first: scope, technical responsibility, and measurable impact.
-          </p>
-          <div class="resume-shell" data-reveal>
-            <div class="resume-list">
-              <article class="resume-item">
-                <h4>Systems Work</h4>
-                <p>Add your top systems projects and measurable results.</p>
-              </article>
-              <article class="resume-item">
-                <h4>Control / Estimation</h4>
-                <p>Add applied control, filtering, and algorithm development highlights.</p>
-              </article>
-              <article class="resume-item">
-                <h4>Simulation / Tooling</h4>
-                <p>Add simulation platforms, automation, and validation process outcomes.</p>
-              </article>
-            </div>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="assets/resume/Liam_Barkley_Resume.pdf" target="_blank" rel="noreferrer">Open Resume PDF</a>
-              <a class="btn btn-ghost" href="#contact">Share Contact</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="blog">
-        <div class="container">
-          <p class="section-kicker" data-reveal>Blog</p>
-          <p class="section-lead" data-reveal>
-            Use blog posts for milestone summaries and quick progress notes. Link out to project pages for full implementation details.
-          </p>
-          <div class="resume-shell" data-reveal>
-            <div class="blog-grid" data-blog-preview-root></div>
-            <div class="hero-actions">
-              <a class="btn btn-ghost" href="blog.html">Open Full Blog</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="contact">
-        <div class="container">
-          <p class="section-kicker" data-reveal>Contact</p>
-          <p class="section-lead" data-reveal>
-            Replace placeholder links so recruiters can contact you directly.
-          </p>
-          <div class="contact-grid">
-            <article class="contact-card" data-reveal>
-              <h3>Email</h3>
-              <a data-owner-email href="mailto:your-email@example.com">your-email@example.com</a>
-            </article>
-            <article class="contact-card" data-reveal>
-              <h3>GitHub</h3>
-              <a data-owner-github href="https://github.com/lbarks27" target="_blank" rel="noreferrer">https://github.com/lbarks27</a>
-            </article>
-            <article class="contact-card" data-reveal>
-              <h3>YouTube</h3>
-              <a data-owner-youtube href="https://www.youtube.com/@lbarks27" target="_blank" rel="noreferrer">https://www.youtube.com/@lbarks27</a>
-            </article>
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">
@@ -128,7 +61,7 @@
       </div>
     </footer>
 
-    <script src="assets/js/content-loader.js?v=20260310-2"></script>
-    <script src="assets/js/main.js?v=20260419-6"></script>
+    <script src="assets/js/content-loader.js?v=20260521-2"></script>
+    <script src="assets/js/main.js?v=20260521-2"></script>
   </body>
 </html>
