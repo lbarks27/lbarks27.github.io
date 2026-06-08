@@ -46,7 +46,7 @@
 
     if (!project) {
       shell.innerHTML =
-        '<section class="container section"><h1 class="section-title">Project Not Found</h1><p class="section-lead">Use the portfolio homepage to select a valid project page.</p><a class="back-link" href="index.html#posts">Back to posts</a></section>';
+        '<section class="container section"><h1 class="section-title">Project Not Found</h1><p class="section-lead">Use the posts archive to select a valid project page.</p><a class="back-link" href="blog.html">Back to posts</a></section>';
       return;
     }
 
@@ -182,7 +182,7 @@
       '<p class="project-tagline">' +
       project.tagline +
       "</p>" +
-      '<a class="back-link" href="index.html#posts">Back to posts</a>' +
+      '<a class="back-link" href="blog.html">Back to posts</a>' +
       "</div>" +
       "</section>" +
       '<section class="section">' +

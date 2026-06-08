@@ -31,11 +31,14 @@ body {
 
 body {
   position: relative;
+  display: flex;
+  flex-direction: column;
   font-family: "Space Grotesk", sans-serif;
   background: #040507;
   color: var(--ink);
   line-height: 1.6;
   min-height: 100vh;
+  min-height: 100svh;
   isolation: isolate;
 }
 
@@ -44,6 +47,14 @@ body > main,
 body > footer {
   position: relative;
   z-index: 1;
+}
+
+body > main {
+  flex: 1 0 auto;
+}
+
+body > footer {
+  flex-shrink: 0;
 }
 
 body::after {
