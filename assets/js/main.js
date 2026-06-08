@@ -18,23 +18,101 @@
       node.textContent = data.owner.name;
     });
 
-    const emailLink = document.querySelector("[data-owner-email]");
-    if (emailLink) {
-      emailLink.textContent = data.owner.email;
-      emailLink.setAttribute("href", "mailto:" + data.owner.email);
+    document.querySelectorAll("[data-owner-email]").forEach((node) => {
+      node.textContent = data.owner.email;
+      if (node.tagName.toLowerCase() === "a") {
+        node.setAttribute("href", "mailto:" + data.owner.email);
+      }
+    });
+
+    document.querySelectorAll("[data-owner-email-link]").forEach((node) => {
+      node.setAttribute("href", "mailto:" + data.owner.email);
+    });
+
+    document.querySelectorAll("[data-owner-github]").forEach((node) => {
+      node.textContent = data.owner.github;
+      if (node.tagName.toLowerCase() === "a") {
+        node.setAttribute("href", data.owner.github);
+      }
+    });
+
+    document.querySelectorAll("[data-owner-github-link]").forEach((node) => {
+      node.setAttribute("href", data.owner.github);
+    });
+
+    document.querySelectorAll("[data-owner-youtube]").forEach((node) => {
+      if (!data.owner.youtube) {
+        return;
+      }
+
+      node.textContent = data.owner.youtube;
+      if (node.tagName.toLowerCase() === "a") {
+        node.setAttribute("href", data.owner.youtube);
+      }
+    });
+
+    document.querySelectorAll("[data-owner-youtube-link]").forEach((node) => {
+      if (data.owner.youtube) {
+        node.setAttribute("href", data.owner.youtube);
+      }
+    });
+  }
+
+  function installContactForm(data) {
+    const form = document.querySelector("[data-contact-form]");
+    if (!form) {
+      return;
     }
 
-    const githubLink = document.querySelector("[data-owner-github]");
-    if (githubLink) {
-      githubLink.textContent = data.owner.github;
-      githubLink.setAttribute("href", data.owner.github);
+    const status = document.querySelector("[data-contact-form-status]");
+    const recipient = data && data.owner && data.owner.email ? data.owner.email : "";
+
+    if (recipient) {
+      form.setAttribute("action", "mailto:" + recipient);
     }
 
-    const youtubeLink = document.querySelector("[data-owner-youtube]");
-    if (youtubeLink && data.owner.youtube) {
-      youtubeLink.textContent = data.owner.youtube;
-      youtubeLink.setAttribute("href", data.owner.youtube);
-    }
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (typeof form.reportValidity === "function" && !form.reportValidity()) {
+        return;
+      }
+
+      if (!recipient) {
+        if (status) {
+          status.textContent = "Email address is unavailable.";
+        }
+        return;
+      }
+
+      const formData = new FormData(form);
+      const name = String(formData.get("name") || "").trim();
+      const email = String(formData.get("email") || "").trim();
+      const subject = String(formData.get("subject") || "").trim() || "Portfolio contact";
+      const message = String(formData.get("message") || "").trim();
+      const bodyLines = [];
+
+      if (name) {
+        bodyLines.push("Name: " + name);
+      }
+
+      if (email) {
+        bodyLines.push("Email: " + email);
+      }
+
+      if (bodyLines.length > 0) {
+        bodyLines.push("");
+      }
+
+      bodyLines.push(message);
+
+      if (status) {
+        status.textContent = "Opening email draft...";
+      }
+
+      window.location.href =
+        "mailto:" + recipient + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(bodyLines.join("\n"));
+    });
   }
 
   function renderPosts(data) {
@@ -71,13 +149,16 @@
 
     const blogItems = blogPosts.map((post, index) => {
       const relatedProject = projectById.get(post.relatedProject);
+      const image = post.image || (relatedProject ? relatedProject.iconOverlay : "");
+      const imageAlt =
+        post.imageAlt || (relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "");
       return {
         type: "Blog Post",
         title: post.title,
         summary: post.excerpt,
         href: "blog.html#" + encodeURIComponent(post.id),
-        image: relatedProject ? relatedProject.iconOverlay : "",
-        imageAlt: relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "",
+        image: image,
+        imageAlt: imageAlt,
         date: post.date,
         sortTime: dateTime(post.date) || Date.UTC(2025, 0, 1) - index * 60000,
         sourceIndex: projects.length + index
@@ -157,13 +238,19 @@
     }
 
     if (toggle && nav) {
+      const closeNav = function () {
+        nav.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+      };
+
       toggle.addEventListener("click", function () {
-        nav.classList.toggle("open");
+        const isOpen = nav.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", String(isOpen));
       });
 
       nav.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", function () {
-          nav.classList.remove("open");
+          closeNav();
         });
       });
     }
@@ -253,6 +340,7 @@
     setOwnerFields(data);
     renderPosts(data);
     installHeaderBehavior();
+    installContactForm(data);
     installRevealAnimations();
     installBackgroundParallax();
     setYear();

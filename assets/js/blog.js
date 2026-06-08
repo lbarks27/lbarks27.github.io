@@ -57,22 +57,33 @@
       href: "project.html?id=" + encodeURIComponent(project.id),
       tags: [],
       content: "",
+      image: project.iconOverlay,
+      imageAlt: project.iconOverlayAlt || project.title + " project image",
       sortTime: Date.UTC(2026, 0, 1) - index * 60000,
       sourceIndex: index
     }));
-    const blogItems = blogPosts.map((post, index) => ({
-      id: post.id,
-      type: "Blog Post",
-      title: post.title,
-      excerpt: post.excerpt,
-      href: "blog.html#" + encodeURIComponent(post.id),
-      tags: post.tags || [],
-      content: post.content || "",
-      date: post.date,
-      relatedProject: post.relatedProject,
-      sortTime: utils.parseIsoDate(post.date).getTime(),
-      sourceIndex: projects.length + index
-    }));
+    const blogItems = blogPosts.map((post, index) => {
+      const relatedProject = projectById.get(post.relatedProject);
+      const image = post.image || (relatedProject ? relatedProject.iconOverlay : "");
+      const imageAlt =
+        post.imageAlt || (relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "");
+
+      return {
+        id: post.id,
+        type: "Blog Post",
+        title: post.title,
+        excerpt: post.excerpt,
+        href: "blog.html#" + encodeURIComponent(post.id),
+        tags: post.tags || [],
+        content: post.content || "",
+        date: post.date,
+        relatedProject: post.relatedProject,
+        image: image,
+        imageAlt: imageAlt,
+        sortTime: utils.parseIsoDate(post.date).getTime(),
+        sourceIndex: projects.length + index
+      };
+    });
     const posts = blogItems
       .concat(projectItems)
       .sort((a, b) => b.sortTime - a.sortTime || a.sourceIndex - b.sourceIndex);
@@ -99,6 +110,13 @@
       article.className = "blog-row";
       article.setAttribute("id", post.id);
       article.setAttribute("data-reveal", "");
+
+      if (post.image) {
+        const imageUrl = new URL(post.image, window.location.href).href;
+        article.classList.add("blog-row-has-image");
+        article.style.setProperty("--blog-row-image", 'url("' + imageUrl.replace(/"/g, '\\"') + '")');
+        article.setAttribute("aria-label", post.imageAlt ? post.title + " / " + post.imageAlt : post.title);
+      }
 
       const meta = document.createElement("p");
       meta.className = "blog-meta";

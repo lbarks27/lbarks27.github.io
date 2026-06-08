@@ -8,13 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260608-4">
   </head>
   <body>
     <header class="site-header">
       <div class="container header-wrap">
         <a class="brand" href="#home">Liam Barkley</a>
-        <button class="menu-toggle" data-menu-toggle type="button" aria-label="Toggle menu">Menu</button>
+        <button class="menu-toggle" data-menu-toggle type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="menu-toggle-icon" aria-hidden="true"></span>
+        </button>
         <nav class="nav-links" data-nav-links>
           <a href="#posts">Posts</a>
           <a href="resume.html">Resume</a>
@@ -43,7 +45,13 @@
         <div class="container">
           <span class="anchor-alias" id="projects" aria-hidden="true"></span>
           <span class="anchor-alias" id="blog" aria-hidden="true"></span>
-          <p class="section-kicker" data-reveal>Posts Preview</p>
+          <div class="section-header" data-reveal>
+            <p class="section-kicker">Posts Preview</p>
+            <h2 class="section-title">Projects and Updates</h2>
+            <p class="section-lead">
+              Recent project deep dives and build notes, ordered so the newest work is easiest to scan.
+            </p>
+          </div>
           <div class="section-actions" data-reveal>
             <a class="btn btn-ghost" href="blog.html">Open Full Blog</a>
           </div>
@@ -61,7 +69,7 @@
       </div>
     </footer>
 
-    <script src="assets/js/content-loader.js?v=20260521-2"></script>
-    <script src="assets/js/main.js?v=20260521-2"></script>
+    <script src="assets/js/content-loader.js?v=20260607-3"></script>
+    <script src="assets/js/main.js?v=20260607-2"></script>
   </body>
 </html>

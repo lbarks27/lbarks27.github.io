@@ -1,5 +1,5 @@
 (function () {
-  const CONTENT_VERSION = "20260310-2";
+  const CONTENT_VERSION = "20260607-3";
 
   function normalizeNewlines(value) {
     return String(value || "").replace(/\r\n?/g, "\n");
@@ -294,6 +294,8 @@
       excerpt: String(attributes.excerpt || ""),
       tags: ensureArray(attributes.tags),
       relatedProject: String(attributes.relatedProject || ""),
+      image: String(attributes.image || ""),
+      imageAlt: String(attributes.imageAlt || ""),
       content: documentData.body.trim()
     };
   }
