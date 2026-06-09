@@ -257,35 +257,7 @@
   }
 
   function installRevealAnimations() {
-    const items = Array.from(document.querySelectorAll("[data-reveal]"));
-    if (items.length === 0) {
-      return;
-    }
-
-    if (!("IntersectionObserver" in window)) {
-      items.forEach((item) => item.classList.add("revealed"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-        rootMargin: "0px 0px -40px 0px"
-      }
-    );
-
-    items.forEach((item, index) => {
-      item.style.transitionDelay = Math.min(index * 30, 240) + "ms";
-      observer.observe(item);
-    });
+    return;
   }
 
   function installBackgroundParallax() {
