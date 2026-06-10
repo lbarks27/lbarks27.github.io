@@ -83,13 +83,22 @@
       article.setAttribute("id", post.id);
       article.setAttribute("data-reveal", "");
 
-      const meta = document.createElement("p");
-      meta.className = "blog-meta timeline-meta";
-      meta.textContent = post.date ? post.type + " / " + formatter.format(utils.parseIsoDate(post.date)) : post.type;
+      const dateEl = document.createElement("time");
+      dateEl.className = "update-date";
+      if (post.date) {
+        const d = utils.parseIsoDate(post.date);
+        dateEl.dateTime = post.date;
+        dateEl.textContent = formatter.format(d);
+      } else {
+        dateEl.textContent = post.type;
+      }
 
       const title = document.createElement("h2");
       title.className = "update-title";
-      title.textContent = post.title;
+      const titleLink = document.createElement("a");
+      titleLink.href = "#" + post.id;
+      titleLink.textContent = post.title;
+      title.appendChild(titleLink);
 
       const body = document.createElement("div");
       body.className = "rich-text update-body";
@@ -104,10 +113,27 @@
         tags.appendChild(node);
       });
 
-      article.appendChild(meta);
+      article.appendChild(dateEl);
       article.appendChild(title);
+
+      // Optional featured image for the update (only explicit post images, not project icon fallbacks)
+      const hasOwnImage = post.image && !/overlay/i.test(post.image);
+      if (hasOwnImage) {
+        const media = document.createElement("figure");
+        media.className = "update-media";
+        const img = document.createElement("img");
+        img.src = post.image;
+        img.alt = post.imageAlt || post.title;
+        img.loading = "lazy";
+        media.appendChild(img);
+        article.appendChild(media);
+      }
+
       article.appendChild(body);
-      article.appendChild(tags);
+
+      if ((post.tags || []).length > 0) {
+        article.appendChild(tags);
+      }
 
       if (post.relatedProject && projectById.has(post.relatedProject)) {
         const project = projectById.get(post.relatedProject);

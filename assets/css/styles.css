@@ -1042,6 +1042,11 @@ img {
   padding-top: 56px;
 }
 
+/* When the updates stream is the main content, pull it a bit closer to the hero */
+.blog-shell .blog-list.timeline {
+  margin-top: 8px;
+}
+
 .project-title,
 .blog-title {
   margin: 0;
@@ -1410,95 +1415,120 @@ img {
   max-width: 76ch;
 }
 
-/* Updates page: continuous full-post timeline (replaces preview rows) */
+/* Updates page — inspired by spacex.com/updates
+   Clean, editorial, continuous stack of full posts.
+   Date + bold title + full body content. Minimal chrome. */
+
 .blog-list.timeline {
   display: flex;
   flex-direction: column;
-  gap: 42px;
-  margin: 28px 0 0;
-  position: relative;
+  gap: 0;
+  margin: 32px 0 48px;
 }
 
-/* subtle vertical timeline line */
-.blog-list.timeline::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 4px;
-  bottom: 4px;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--line), rgba(255,255,255,0.06));
-  opacity: 0.55;
-  pointer-events: none;
-}
-
+/* Each update is a self-contained full post */
 .timeline-post {
-  position: relative;
-  padding-left: 38px;
+  /* no heavy card; pure content flow */
 }
 
-.timeline-post::before {
-  content: "";
-  position: absolute;
-  left: 3px;
-  top: 6px;
-  width: 15px;
-  height: 15px;
-  border-radius: 999px;
-  border: 2px solid var(--accent-soft);
-  background: var(--bg, #0a0a0a);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.35);
-  z-index: 1;
-}
-
-.timeline-meta {
-  margin: 0 0 4px;
-  font-size: 0.76rem;
-  letter-spacing: 0.12em;
+.update-date {
+  display: block;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--accent-soft);
+  margin-bottom: 8px;
 }
 
 .update-title {
-  margin: 2px 0 14px;
-  font-size: 1.38rem;
-  line-height: 1.15;
+  margin: 0 0 16px;
+  font-size: clamp(1.42rem, 4vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: 0.005em;
+}
+
+.update-title a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.update-title a:hover,
+.update-title a:focus-visible {
+  color: var(--accent);
+}
+
+.update-media {
+  margin: 18px 0 22px;
+  max-width: 100%;
+}
+
+.update-media img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: var(--radius-md, 6px);
+  border: 1px solid var(--line);
 }
 
 .update-body {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
-/* full posts use primary text color for readability */
+/* Full posts read with primary ink color */
 .timeline-post .rich-text {
   color: var(--ink);
+  max-width: 78ch;
+}
+
+.timeline-post .rich-text h2,
+.timeline-post .rich-text h3 {
+  /* internal section heads (e.g. "Super Heavy V3 Change Highlights") */
+  margin-top: 26px;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
 }
 
 .timeline-post .tags {
-  margin-top: 4px;
+  margin-top: 6px;
+  margin-bottom: 4px;
 }
 
 .timeline-post .back-link,
 .timeline-post .update-related {
   display: inline-block;
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 0.9rem;
+  color: var(--accent-soft);
+  text-decoration: none;
+}
+
+.timeline-post .back-link:hover,
+.timeline-post .update-related:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Subtle separation between posts for continuous feel (SpaceX-style log) */
+.timeline-post + .timeline-post {
+  margin-top: 64px;
+  border-top: 1px solid var(--line);
+  padding-top: 64px;
 }
 
 @media (max-width: 640px) {
   .blog-list.timeline {
-    gap: 32px;
+    margin-bottom: 32px;
   }
-  .timeline-post {
-    padding-left: 28px;
+  .timeline-post + .timeline-post {
+    margin-top: 48px;
+    padding-top: 48px;
   }
-  .timeline-post::before {
-    left: 2px;
-    width: 11px;
-    height: 11px;
-    top: 5px;
-  }
-  .blog-list.timeline::before {
-    left: 7px;
+  .update-media img {
+    max-height: 280px;
   }
 }
 
