@@ -713,7 +713,7 @@ img {
 }
 
 .contact-section {
-  padding-top: 56px;
+  padding-top: 24px;
 }
 
 .contact-layout {
@@ -912,7 +912,7 @@ img {
 }
 
 .about-section {
-  padding-top: 56px;
+  padding-top: 24px;
 }
 
 .about-layout {
@@ -1028,18 +1028,22 @@ img {
 
 .project-shell,
 .blog-shell {
-  padding-top: calc(var(--header-height) + 16px);
+  padding-top: 0;
 }
 
 .project-hero,
 .blog-hero {
-  padding: 42px 0 26px;
+  padding: 58px 0 26px;
+  background: rgba(0, 0, 0, 0.82);
   border-bottom: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 
 .project-shell > .section,
 .blog-shell > .section {
-  padding-top: 56px;
+  padding-top: 24px;
 }
 
 /* When the updates stream is the main content, pull it a bit closer to the hero */
@@ -1302,7 +1306,7 @@ img {
 }
 
 .gallery-section {
-  padding-top: 56px;
+  padding-top: 24px;
 }
 
 .gallery-grid {
@@ -1752,12 +1756,12 @@ img {
 
   .project-shell,
   .blog-shell {
-    padding-top: calc(var(--header-height) + 8px);
+    padding-top: 0;
   }
 
   .project-hero,
   .blog-hero {
-    padding: 30px 0 24px;
+    padding: 38px 0 24px;
   }
 
   .project-title,
@@ -1767,7 +1771,7 @@ img {
 
   .project-shell > .section,
   .blog-shell > .section {
-    padding-top: 40px;
+    padding-top: 16px;
   }
 
   .contact-card {
