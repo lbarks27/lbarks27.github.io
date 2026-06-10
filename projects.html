@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Liam Barkley | Portfolio</title>
-    <meta name="description" content="Engineering portfolio for Liam Barkley with project deep dives, blog updates, resume, and contact details.">
+    <title>Projects | Liam Barkley</title>
+    <meta name="description" content="Project deep dives for Liam Barkley: controls, simulation, systems engineering builds with notes and results.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css?v=20260608-14">
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header scrolled">
       <div class="container header-wrap">
-        <a class="brand" href="#home">Liam Barkley</a>
+        <a class="brand" href="index.html#home">Liam Barkley</a>
         <button class="menu-toggle" data-menu-toggle type="button" aria-label="Toggle menu" aria-expanded="false">
           <span class="menu-toggle-icon" aria-hidden="true"></span>
         </button>
@@ -27,26 +27,28 @@
       </div>
     </header>
 
-    <main>
-      <section class="hero" id="home">
-        <div class="container hero-grid">
-          <p class="section-kicker" data-reveal>Engineering Portfolio</p>
-          <h1 class="hero-title" data-reveal>
-            LIAM<br>
-            BARKLEY
-          </h1>
-          <p class="hero-subtitle" data-reveal>
-            Controls, simulation, and systems engineering work, with concise build notes alongside project deep dives.
+    <main class="blog-shell">
+      <section class="blog-hero">
+        <div class="container">
+          <p class="section-kicker" data-reveal>Projects</p>
+          <h1 class="blog-title" data-reveal>Projects</h1>
+          <p class="project-tagline" data-reveal>
+            Deep dives into builds: simulation, controls, estimation, and hardware experiments with notes and data.
           </p>
         </div>
       </section>
 
+      <section class="section">
+        <div class="container">
+          <div class="blog-list" data-projects-root></div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
       <div class="container footer-inner">
         <p>
-          © <span data-year></span> <span data-owner-name>Liam Barkley</span>. Built for GitHub Pages.
+          © <span data-year></span> <span data-owner-name>Liam Barkley</span>. Projects archive.
         </p>
         <nav class="footer-socials" aria-label="Social links">
           <a data-owner-github-link href="https://github.com/lbarks27" target="_blank" rel="noreferrer">GitHub</a>
@@ -58,5 +60,6 @@
 
     <script src="assets/js/content-loader.js?v=20260607-3"></script>
     <script src="assets/js/main.js?v=20260608-2"></script>
+    <script src="assets/js/projects.js?v=20260608-1"></script>
   </body>
 </html>

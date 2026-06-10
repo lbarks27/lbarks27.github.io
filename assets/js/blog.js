@@ -30,46 +30,33 @@
       day: "numeric"
     });
 
-    const projects = Array.isArray(data.projects) ? data.projects : [];
     const blogPosts = Array.isArray(data.blogPosts) ? data.blogPosts : [];
+    const projects = Array.isArray(data.projects) ? data.projects : [];
     const projectById = new Map(projects.map((project) => [project.id, project]));
-    const projectItems = projects.map((project, index) => ({
-      id: "project-" + project.id,
-      type: "Project Deep Dive",
-      title: project.title,
-      excerpt: project.tagline,
-      href: "project.html?id=" + encodeURIComponent(project.id),
-      tags: [],
-      content: "",
-      image: project.iconOverlay,
-      imageAlt: project.iconOverlayAlt || project.title + " project image",
-      sortTime: Date.UTC(2026, 0, 1) - index * 60000,
-      sourceIndex: index
-    }));
-    const blogItems = blogPosts.map((post, index) => {
-      const relatedProject = projectById.get(post.relatedProject);
-      const image = post.image || (relatedProject ? relatedProject.iconOverlay : "");
-      const imageAlt =
-        post.imageAlt || (relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "");
 
-      return {
-        id: post.id,
-        type: "Blog Post",
-        title: post.title,
-        excerpt: post.excerpt,
-        href: "blog.html#" + encodeURIComponent(post.id),
-        tags: post.tags || [],
-        content: post.content || "",
-        date: post.date,
-        relatedProject: post.relatedProject,
-        image: image,
-        imageAlt: imageAlt,
-        sortTime: utils.parseIsoDate(post.date).getTime(),
-        sourceIndex: projects.length + index
-      };
-    });
-    const posts = blogItems
-      .concat(projectItems)
+    const posts = blogPosts
+      .map((post, index) => {
+        const relatedProject = projectById.get(post.relatedProject);
+        const image = post.image || (relatedProject ? relatedProject.iconOverlay : "");
+        const imageAlt =
+          post.imageAlt || (relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "");
+
+        return {
+          id: post.id,
+          type: "Update",
+          title: post.title,
+          excerpt: post.excerpt,
+          href: "blog.html#" + encodeURIComponent(post.id),
+          tags: post.tags || [],
+          content: post.content || "",
+          date: post.date,
+          relatedProject: post.relatedProject,
+          image: image,
+          imageAlt: imageAlt,
+          sortTime: utils.parseIsoDate(post.date).getTime(),
+          sourceIndex: index
+        };
+      })
       .sort((a, b) => b.sortTime - a.sortTime || a.sourceIndex - b.sourceIndex);
 
     root.innerHTML = "";
@@ -78,7 +65,7 @@
       const placeholder = document.createElement("div");
       placeholder.className = "placeholder";
       placeholder.setAttribute("data-reveal", "");
-      placeholder.textContent = "Posts are temporarily unavailable while content loads. Refresh to try again.";
+      placeholder.textContent = "Updates are temporarily unavailable while content loads. Refresh to try again.";
       root.appendChild(placeholder);
 
       if (window.installRevealAnimationsFromDynamicContent) {
@@ -133,13 +120,7 @@
         article.appendChild(body);
       }
 
-      if (post.type === "Project Deep Dive") {
-        const link = document.createElement("a");
-        link.className = "back-link";
-        link.href = post.href;
-        link.textContent = "Open project deep dive";
-        article.appendChild(link);
-      } else if (post.relatedProject && projectById.has(post.relatedProject)) {
+      if (post.relatedProject && projectById.has(post.relatedProject)) {
         const project = projectById.get(post.relatedProject);
         const link = document.createElement("a");
         link.className = "back-link";

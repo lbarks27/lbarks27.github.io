@@ -153,7 +153,7 @@
       const imageAlt =
         post.imageAlt || (relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "");
       return {
-        type: "Blog Post",
+        type: "Update",
         title: post.title,
         summary: post.excerpt,
         href: "blog.html#" + encodeURIComponent(post.id),
@@ -171,7 +171,7 @@
       const placeholder = document.createElement("div");
       placeholder.className = "placeholder";
       placeholder.setAttribute("data-reveal", "");
-      placeholder.textContent = "Posts are temporarily unavailable while content loads. Refresh to try again.";
+      placeholder.textContent = "Content is temporarily unavailable while content loads. Refresh to try again.";
       root.appendChild(placeholder);
       return;
     }
