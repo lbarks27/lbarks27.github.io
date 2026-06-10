@@ -1043,7 +1043,8 @@ img {
 
 .project-shell > .section,
 .blog-shell > .section {
-  padding-top: 24px;
+  padding-top: 16px;
+  padding-bottom: 32px;
 }
 
 /* When the updates stream is the main content, pull it a bit closer to the hero */
@@ -1123,6 +1124,32 @@ img {
   }
 }
 
+/* Remove blur and hover/focus "cursor over" effects on projects in the listing.
+   Keep backgrounds crisp and completely static (no scale, no unblur, no overlay blur). */
+.blog-list.project-previews .blog-row-has-image::before {
+  filter: none;
+  opacity: 0.96;
+  transform: scale(1);
+  transition: none;
+}
+
+.blog-list.project-previews .blog-row-has-image::after {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: none;
+}
+
+.blog-list.project-previews .blog-row-has-image:hover::before,
+.blog-list.project-previews .blog-row-has-image:focus-within::before,
+.blog-list.project-previews .blog-row-has-image:hover::after,
+.blog-list.project-previews .blog-row-has-image:focus-within::after {
+  filter: none;
+  opacity: 0.96;
+  transform: scale(1);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .project-title,
 .blog-title {
   margin: 0;
@@ -1144,7 +1171,7 @@ img {
 .project-layout {
   display: grid;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .panel {
@@ -1771,7 +1798,8 @@ img {
 
   .project-shell > .section,
   .blog-shell > .section {
-    padding-top: 16px;
+    padding-top: 12px;
+    padding-bottom: 20px;
   }
 
   .contact-card {
