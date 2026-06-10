@@ -1410,6 +1410,98 @@ img {
   max-width: 76ch;
 }
 
+/* Updates page: continuous full-post timeline (replaces preview rows) */
+.blog-list.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  margin: 28px 0 0;
+  position: relative;
+}
+
+/* subtle vertical timeline line */
+.blog-list.timeline::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--line), rgba(255,255,255,0.06));
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.timeline-post {
+  position: relative;
+  padding-left: 38px;
+}
+
+.timeline-post::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  border: 2px solid var(--accent-soft);
+  background: var(--bg, #0a0a0a);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.timeline-meta {
+  margin: 0 0 4px;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  color: var(--accent-soft);
+}
+
+.update-title {
+  margin: 2px 0 14px;
+  font-size: 1.38rem;
+  line-height: 1.15;
+}
+
+.update-body {
+  margin-bottom: 14px;
+}
+
+/* full posts use primary text color for readability */
+.timeline-post .rich-text {
+  color: var(--ink);
+}
+
+.timeline-post .tags {
+  margin-top: 4px;
+}
+
+.timeline-post .back-link,
+.timeline-post .update-related {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .blog-list.timeline {
+    gap: 32px;
+  }
+  .timeline-post {
+    padding-left: 28px;
+  }
+  .timeline-post::before {
+    left: 2px;
+    width: 11px;
+    height: 11px;
+    top: 5px;
+  }
+  .blog-list.timeline::before {
+    left: 7px;
+  }
+}
+
 .mono {
   font-family: "IBM Plex Mono", monospace;
 }

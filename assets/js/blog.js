@@ -60,6 +60,7 @@
       .sort((a, b) => b.sortTime - a.sortTime || a.sourceIndex - b.sourceIndex);
 
     root.innerHTML = "";
+    root.classList.add("timeline");
 
     if (posts.length === 0) {
       const placeholder = document.createElement("div");
@@ -78,26 +79,21 @@
 
     posts.forEach((post) => {
       const article = document.createElement("article");
-      article.className = "blog-row";
+      article.className = "timeline-post";
       article.setAttribute("id", post.id);
       article.setAttribute("data-reveal", "");
 
-      if (post.image) {
-        const imageUrl = new URL(post.image, window.location.href).href;
-        article.classList.add("blog-row-has-image");
-        article.style.setProperty("--blog-row-image", 'url("' + imageUrl.replace(/"/g, '\\"') + '")');
-        article.setAttribute("aria-label", post.imageAlt ? post.title + " / " + post.imageAlt : post.title);
-      }
-
       const meta = document.createElement("p");
-      meta.className = "blog-meta";
+      meta.className = "blog-meta timeline-meta";
       meta.textContent = post.date ? post.type + " / " + formatter.format(utils.parseIsoDate(post.date)) : post.type;
 
       const title = document.createElement("h2");
+      title.className = "update-title";
       title.textContent = post.title;
 
-      const excerpt = document.createElement("p");
-      excerpt.textContent = post.excerpt;
+      const body = document.createElement("div");
+      body.className = "rich-text update-body";
+      body.innerHTML = utils.renderMarkdown(post.content || post.excerpt || "");
 
       const tags = document.createElement("div");
       tags.className = "tags";
@@ -110,20 +106,13 @@
 
       article.appendChild(meta);
       article.appendChild(title);
-      article.appendChild(excerpt);
+      article.appendChild(body);
       article.appendChild(tags);
-
-      if (post.content && post.content.trim() && post.content.trim() !== post.excerpt.trim()) {
-        const body = document.createElement("div");
-        body.className = "rich-text";
-        body.innerHTML = utils.renderMarkdown(post.content);
-        article.appendChild(body);
-      }
 
       if (post.relatedProject && projectById.has(post.relatedProject)) {
         const project = projectById.get(post.relatedProject);
         const link = document.createElement("a");
-        link.className = "back-link";
+        link.className = "back-link update-related";
         link.href = "project.html?id=" + encodeURIComponent(project.id);
         link.textContent = "Open project deep dive: " + project.title;
         article.appendChild(link);
