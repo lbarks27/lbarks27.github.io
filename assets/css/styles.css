@@ -1049,8 +1049,9 @@ img {
 
 
 
-/* Projects page: expanded preview boxes (title + overview + button to full project page),
-   with project image as background. Stacked to fill the page, full-width separators. */
+/* Projects page: expanded preview boxes with full-bleed background images (like spacex.com).
+   Each box and the separators span the entire viewport width.
+   Text content is constrained to a readable centered column. */
 .blog-list.project-previews {
   display: flex;
   flex-direction: column;
@@ -1058,48 +1059,63 @@ img {
   margin: 8px 0 48px;
 }
 
-/* Leverage the existing .blog-row + .blog-row-has-image for the background image treatment,
-   but make the boxes more expanded / prominent to fill the page. */
+/* Make the preview box itself full viewport width so the background image + overlay spans the whole page */
 .blog-list.project-previews .blog-row {
-  padding: 32px 28px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding-left: 0;
+  padding-right: 0;
+  border: none;
+  box-shadow: none; /* full-bleed sections don't need card shadows */
+  box-sizing: border-box;
 }
 
 .blog-list.project-previews .blog-row h2 {
-  font-size: 1.55rem;
-  margin-bottom: 10px;
+  font-size: 1.65rem;
+  margin-bottom: 12px;
 }
 
-/* The overview uses the richer project summary (can be multiple paragraphs) */
+/* Constrain all direct content (meta, title, overview, button) to a nice readable width, centered over the full-bleed image */
+.blog-list.project-previews .blog-row > * {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+/* The overview uses the richer project summary */
 .blog-list.project-previews .project-overview {
-  margin-bottom: 16px;
-  max-width: 72ch;
+  margin-bottom: 20px;
 }
 
+/* Button */
 .blog-list.project-previews .back-link {
   display: inline-block;
   margin-top: 8px;
 }
 
-/* Full-width separators that span the entire content area between the expanded project boxes */
+/* Full-width separators that truly span the whole page (100vw) between the expanded project boxes */
 .blog-list.project-previews .project-separator {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   height: 1px;
   background: var(--line);
-  margin: 0;
-  width: 100%;
-}
-
-/* Breathing room so the line sits nicely between boxes without touching their borders */
-.blog-list.project-previews .blog-row + .project-separator {
-  margin-top: 12px;
-}
-
-.blog-list.project-previews .project-separator + .blog-row {
-  margin-top: 12px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 @media (max-width: 640px) {
   .blog-list.project-previews .blog-row {
-    padding: 24px 20px;
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+  .blog-list.project-previews .blog-row > * {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
