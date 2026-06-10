@@ -1049,101 +1049,57 @@ img {
 
 
 
-/* Projects listing — full content entries that fill the page (no more teaser cards linking to project.html) */
-.blog-list.projects-full {
+/* Projects page: expanded preview boxes (title + overview + button to full project page),
+   with project image as background. Stacked to fill the page, full-width separators. */
+.blog-list.project-previews {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin: 8px 0 64px;
+  margin: 8px 0 48px;
 }
 
-.project-entry {
-  /* Expansive block for each full project */
+/* Leverage the existing .blog-row + .blog-row-has-image for the background image treatment,
+   but make the boxes more expanded / prominent to fill the page. */
+.blog-list.project-previews .blog-row {
+  padding: 32px 28px;
 }
 
-.project-entry + .project-entry {
-  margin-top: 72px;
-  border-top: 1px solid var(--line);
-  padding-top: 56px;
+.blog-list.project-previews .blog-row h2 {
+  font-size: 1.55rem;
+  margin-bottom: 10px;
 }
 
-.project-entry-header {
-  margin-bottom: 20px;
+/* The overview uses the richer project summary (can be multiple paragraphs) */
+.blog-list.project-previews .project-overview {
+  margin-bottom: 16px;
+  max-width: 72ch;
 }
 
-.project-entry-meta {
-  margin: 0 0 6px;
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
+.blog-list.project-previews .back-link {
+  display: inline-block;
+  margin-top: 8px;
 }
 
-.project-entry-title {
-  margin: 0 0 8px;
-  font-size: clamp(1.5rem, 4.2vw, 2.15rem);
-  line-height: 1.1;
-}
-
-.project-entry-title a {
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.project-entry-title a:hover,
-.project-entry-title a:focus-visible {
-  color: var(--accent);
-}
-
-.project-entry-tagline {
+/* Full-width separators that span the entire content area between the expanded project boxes */
+.blog-list.project-previews .project-separator {
+  height: 1px;
+  background: var(--line);
   margin: 0;
-  color: var(--muted);
-  font-size: 1.02rem;
-  max-width: 68ch;
+  width: 100%;
 }
 
-.project-entry-body {
-  /* The full deep content lives here on the listing page */
-}
-
-.project-section {
-  margin-top: 22px;
-}
-
-.project-section:first-child {
+/* Breathing room so the line sits nicely between boxes without touching their borders */
+.blog-list.project-previews .blog-row + .project-separator {
   margin-top: 12px;
 }
 
-.project-section h3 {
-  margin: 0 0 10px;
-  font-family: "Barlow Condensed", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.95rem;
-  color: var(--accent-soft);
-}
-
-.project-section .rich-text {
-  color: var(--ink);
-  max-width: 78ch;
-}
-
-/* Give the sections inside a full project entry a bit more presence on the listing */
-.project-section + .project-section {
-  margin-top: 28px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.project-media-grid {
-  /* slightly tighter for the list view */
+.blog-list.project-previews .project-separator + .blog-row {
+  margin-top: 12px;
 }
 
 @media (max-width: 640px) {
-  .blog-list.projects-full {
-    margin-bottom: 40px;
-  }
-  .project-entry + .project-entry {
-    margin-top: 56px;
-    padding-top: 44px;
+  .blog-list.project-previews .blog-row {
+    padding: 24px 20px;
   }
 }
 

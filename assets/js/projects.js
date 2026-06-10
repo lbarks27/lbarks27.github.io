@@ -31,20 +31,32 @@
     });
 
     const projects = Array.isArray(data.projects) ? data.projects : [];
-    const blogPosts = Array.isArray(data.blogPosts) ? data.blogPosts : [];
+
+    const items = projects.map((project, index) => ({
+      id: project.id,
+      type: "Project Deep Dive",
+      title: project.title,
+      summary: project.summary || project.tagline || "",
+      href: "project.html?id=" + encodeURIComponent(project.id),
+      image: project.iconOverlay,
+      imageAlt: project.iconOverlayAlt || project.title + " project image",
+      date: project.date || null,
+      sortTime: project.date ? utils.parseIsoDate(project.date).getTime() : (Date.UTC(2026, 0, 1) - index * 60000),
+      sourceIndex: index
+    }));
 
     // Sort: dated first (newest), then by original index order for undated
-    const sortedProjects = [...projects].sort((a, b) => {
-      const ta = a.date ? utils.parseIsoDate(a.date).getTime() : 0;
-      const tb = b.date ? utils.parseIsoDate(b.date).getTime() : 0;
+    items.sort((a, b) => {
+      const ta = a.sortTime || 0;
+      const tb = b.sortTime || 0;
       if (ta !== tb) return tb - ta;
-      return projects.indexOf(a) - projects.indexOf(b);
+      return a.sourceIndex - b.sourceIndex;
     });
 
     root.innerHTML = "";
-    root.classList.add("projects-full");
+    root.classList.add("project-previews");
 
-    if (sortedProjects.length === 0) {
+    if (items.length === 0) {
       const placeholder = document.createElement("div");
       placeholder.className = "placeholder";
       placeholder.setAttribute("data-reveal", "");
@@ -59,128 +71,49 @@
       return;
     }
 
-    sortedProjects.forEach((project) => {
+    items.forEach((item, index) => {
       const article = document.createElement("article");
-      article.className = "project-entry";
-      article.setAttribute("id", "project-" + project.id);
+      article.className = "blog-row";
+      article.setAttribute("id", "project-" + item.id);
       article.setAttribute("data-reveal", "");
 
-      // Header (date, title as in-page anchor, tagline)
-      const header = document.createElement("div");
-      header.className = "project-entry-header";
+      if (item.image) {
+        const imageUrl = new URL(item.image, window.location.href).href;
+        article.classList.add("blog-row-has-image");
+        article.style.setProperty("--blog-row-image", 'url("' + imageUrl.replace(/"/g, '\\"') + '")');
+        article.setAttribute("aria-label", item.imageAlt ? item.title + " / " + item.imageAlt : item.title);
+      }
 
       const meta = document.createElement("p");
-      meta.className = "blog-meta project-entry-meta";
-      meta.textContent = project.date ? "Project / " + formatter.format(utils.parseIsoDate(project.date)) : "Project";
+      meta.className = "blog-meta";
+      meta.textContent = item.date ? item.type + " / " + formatter.format(utils.parseIsoDate(item.date)) : item.type;
 
       const title = document.createElement("h2");
-      title.className = "project-entry-title";
-      const titleLink = document.createElement("a");
-      titleLink.href = "#project-" + project.id;
-      titleLink.textContent = project.title;
-      title.appendChild(titleLink);
+      title.textContent = item.title;
 
-      const tagline = document.createElement("p");
-      tagline.className = "project-entry-tagline";
-      tagline.textContent = project.tagline || "";
+      // Expanded: use the full overview/summary (rich text) instead of short excerpt
+      const overview = document.createElement("div");
+      overview.className = "rich-text project-overview";
+      overview.innerHTML = utils.renderMarkdown(item.summary);
 
-      header.appendChild(meta);
-      header.appendChild(title);
-      header.appendChild(tagline);
+      const link = document.createElement("a");
+      link.className = "back-link";
+      link.href = item.href;
+      link.textContent = "View full project";
 
-      // Rich body sections (full content on the listing page — no links to separate project.html)
-      const body = document.createElement("div");
-      body.className = "project-entry-body";
+      article.appendChild(meta);
+      article.appendChild(title);
+      article.appendChild(overview);
+      article.appendChild(link);
 
-      // Overview
-      if (project.summary) {
-        const sec = document.createElement("div");
-        sec.className = "project-section";
-        const h = document.createElement("h3");
-        h.textContent = "Overview";
-        const rich = document.createElement("div");
-        rich.className = "rich-text";
-        rich.innerHTML = utils.renderMarkdown(project.summary);
-        sec.appendChild(h);
-        sec.appendChild(rich);
-        body.appendChild(sec);
-      }
-
-      // Solver Deep Dive
-      if (project.solverApproach) {
-        const sec = document.createElement("div");
-        sec.className = "project-section";
-        const h = document.createElement("h3");
-        h.textContent = "Solver Deep Dive";
-        const rich = document.createElement("div");
-        rich.className = "rich-text";
-        rich.innerHTML = utils.renderMarkdown(project.solverApproach);
-        sec.appendChild(h);
-        sec.appendChild(rich);
-        body.appendChild(sec);
-      }
-
-      // Resources
-      const resSec = document.createElement("div");
-      resSec.className = "project-section";
-      const resH = document.createElement("h3");
-      resH.textContent = "Resources";
-      const resList = document.createElement("div");
-      resList.className = "resource-list";
-      resList.innerHTML = renderResources(project);
-      resSec.appendChild(resH);
-      resSec.appendChild(resList);
-      body.appendChild(resSec);
-
-      // Media (photos + videos)
-      const hasPhotos = Array.isArray(project.photos) && project.photos.length > 0;
-      const hasVideos = Array.isArray(project.videos) && project.videos.length > 0;
-      if (hasPhotos || hasVideos) {
-        const mediaSec = document.createElement("div");
-        mediaSec.className = "project-section";
-        const mH = document.createElement("h3");
-        mH.textContent = "Media";
-        const grid = document.createElement("div");
-        grid.className = "media-grid project-media-grid";
-        if (hasPhotos) grid.innerHTML += renderPhotos(project);
-        if (hasVideos) grid.innerHTML += renderVideos(project);
-        mediaSec.appendChild(mH);
-        mediaSec.appendChild(grid);
-        body.appendChild(mediaSec);
-      }
-
-      // Data and Results
-      if (project.dataNotes) {
-        const sec = document.createElement("div");
-        sec.className = "project-section";
-        const h = document.createElement("h3");
-        h.textContent = "Data and Results";
-        const rich = document.createElement("div");
-        rich.className = "rich-text";
-        rich.innerHTML = utils.renderMarkdown(project.dataNotes);
-        sec.appendChild(h);
-        sec.appendChild(rich);
-        body.appendChild(sec);
-      }
-
-      // Related updates (point to the full updates page)
-      const related = blogPosts.filter((post) => post.relatedProject === project.id);
-      if (related.length > 0) {
-        const relSec = document.createElement("div");
-        relSec.className = "project-section";
-        const rH = document.createElement("h3");
-        rH.textContent = "Related Updates";
-        const rList = document.createElement("div");
-        rList.className = "resource-list";
-        rList.innerHTML = renderRelatedPosts(related, utils, formatter);
-        relSec.appendChild(rH);
-        relSec.appendChild(rList);
-        body.appendChild(relSec);
-      }
-
-      article.appendChild(header);
-      article.appendChild(body);
       root.appendChild(article);
+
+      // Full-width separator that spans the page / content area between expanded boxes
+      if (index < items.length - 1) {
+        const sep = document.createElement("div");
+        sep.className = "project-separator";
+        root.appendChild(sep);
+      }
     });
 
     if (window.installRevealAnimationsFromDynamicContent) {
@@ -188,113 +121,6 @@
     } else {
       installRevealFallback();
     }
-  }
-
-  function renderResources(project) {
-    const resources = [];
-
-    resources.push({
-      label: "GitHub repository",
-      value: project.github || "Link pending",
-      href: project.github || ""
-    });
-
-    if (Array.isArray(project.datasets) && project.datasets.length > 0) {
-      project.datasets.forEach((dataset) => {
-        const datasetObject = typeof dataset === "string" ? { name: "Dataset", url: dataset } : dataset;
-        resources.push({
-          label: datasetObject.name || "Dataset",
-          value: datasetObject.url || "Link pending",
-          href: datasetObject.url || ""
-        });
-      });
-    } else {
-      resources.push({
-        label: "Dataset package",
-        value: "Link pending",
-        href: ""
-      });
-    }
-
-    return resources
-      .map((resource) => {
-        const action = resource.href
-          ? '<a target="_blank" rel="noreferrer" href="' + resource.href + '">Open</a>'
-          : "<span>Pending</span>";
-        return (
-          '<div class="resource-item"><strong>' +
-          resource.label +
-          "</strong>" +
-          '<span class="mono">' +
-          resource.value +
-          "</span>" +
-          action +
-          "</div>"
-        );
-      })
-      .join("");
-  }
-
-  function renderPhotos(project) {
-    if (Array.isArray(project.photos) && project.photos.length > 0) {
-      return project.photos
-        .map((photo, index) => {
-          const src = typeof photo === "string" ? photo : photo.src;
-          const alt = typeof photo === "string" ? project.title + " photo " + (index + 1) : photo.alt || project.title;
-          return '<img class="media-thumb" src="' + src + '" alt="' + alt + '">';
-        })
-        .join("");
-    }
-    return "";
-  }
-
-  function renderVideos(project) {
-    if (Array.isArray(project.videos) && project.videos.length > 0) {
-      return project.videos
-        .map((video) => {
-          const videoSource = typeof video === "string" ? video : video.src;
-          if (videoSource.endsWith(".mp4")) {
-            return (
-              '<video class="media-thumb" controls>' +
-              '<source src="' +
-              videoSource +
-              '" type="video/mp4">' +
-              "</video>"
-            );
-          }
-          return (
-            '<iframe class="media-thumb" src="' +
-            videoSource +
-            '" title="Project video" loading="lazy" allowfullscreen></iframe>'
-          );
-        })
-        .join("");
-    }
-    return "";
-  }
-
-  function renderRelatedPosts(relatedPosts, utils, formatter) {
-    if (!relatedPosts || relatedPosts.length === 0) {
-      return "<p>No related updates yet.</p>";
-    }
-
-    return relatedPosts
-      .map((post) => {
-        return (
-          '<div class="resource-item">' +
-          "<strong>" +
-          post.title +
-          "</strong>" +
-          "<span>" +
-          formatter.format(utils.parseIsoDate(post.date)) +
-          "</span>" +
-          '<a href="blog.html#' +
-          post.id +
-          '">Read</a>' +
-          "</div>"
-        );
-      })
-      .join("");
   }
 
   if (document.readyState === "loading") {

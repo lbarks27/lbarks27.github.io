@@ -140,7 +140,7 @@
       type: "Project Deep Dive",
       title: project.title,
       summary: project.tagline,
-      href: "projects.html#project-" + encodeURIComponent(project.id),
+      href: "project.html?id=" + encodeURIComponent(project.id),
       image: project.iconOverlay,
       imageAlt: project.iconOverlayAlt || project.title + " project image",
       sortTime: dateTime(project.date) || Date.UTC(2026, 0, 1) - index * 60000,
