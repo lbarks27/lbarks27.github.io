@@ -162,9 +162,8 @@ img {
     background-color 0.2s ease,
     box-shadow 0.2s ease,
     backdrop-filter 0.2s ease,
-    transform 0.24s ease,
     opacity 0.24s ease;
-  will-change: transform, opacity;
+  will-change: opacity;
 }
 
 .site-header.scrolled {
@@ -177,7 +176,6 @@ img {
 }
 
 .site-header.is-hidden {
-  transform: translateY(-110%);
   opacity: 0;
   pointer-events: none;
 }
