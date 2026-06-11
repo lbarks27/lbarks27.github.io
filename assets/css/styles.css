@@ -206,6 +206,12 @@ img {
   color: var(--accent);
 }
 
+.nav-links a.active,
+.nav-links a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .menu-toggle {
   display: none;
   place-items: center;

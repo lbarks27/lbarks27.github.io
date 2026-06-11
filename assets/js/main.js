@@ -256,6 +256,39 @@
     }
   }
 
+  function highlightCurrentNav() {
+    const nav = document.querySelector("[data-nav-links]");
+    if (!nav) return;
+
+    const links = nav.querySelectorAll("a");
+    const path = window.location.pathname.toLowerCase();
+    const file = path.split("/").pop() || "index.html";
+
+    let target = null;
+
+    if (file === "blog.html") {
+      target = "blog.html";
+    } else if (file === "projects.html" || file === "project.html") {
+      target = "projects.html";
+    } else if (file === "gallery.html") {
+      target = "gallery.html";
+    } else if (file === "resume.html") {
+      target = "resume.html";
+    } else if (file === "contact.html") {
+      target = "contact.html";
+    }
+
+    if (!target) return; // home or unknown: no nav item active
+
+    links.forEach((link) => {
+      const href = (link.getAttribute("href") || "").toLowerCase();
+      if (href === target || href.endsWith("/" + target)) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      }
+    });
+  }
+
   function installRevealAnimations() {
     return;
   }
@@ -312,6 +345,7 @@
     setOwnerFields(data);
     renderPosts(data);
     installHeaderBehavior();
+    highlightCurrentNav();
     installContactForm(data);
     installRevealAnimations();
     installBackgroundParallax();
