@@ -24,17 +24,10 @@
     }
 
     const utils = getUtils();
-    const formatter = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric"
-    });
-
     const projects = Array.isArray(data.projects) ? data.projects : [];
 
     const items = projects.map((project, index) => ({
       id: project.id,
-      type: "Project Deep Dive",
       title: project.title,
       summary: project.summary || project.tagline || "",
       href: "project.html?id=" + encodeURIComponent(project.id),
@@ -84,10 +77,6 @@
         article.setAttribute("aria-label", item.imageAlt ? item.title + " / " + item.imageAlt : item.title);
       }
 
-      const meta = document.createElement("p");
-      meta.className = "blog-meta";
-      meta.textContent = item.date ? item.type + " / " + formatter.format(utils.parseIsoDate(item.date)) : item.type;
-
       const title = document.createElement("h2");
       title.textContent = item.title;
 
@@ -97,14 +86,17 @@
       overview.innerHTML = utils.renderMarkdown(item.summary);
 
       const link = document.createElement("a");
-      link.className = "back-link";
+      link.className = "btn btn-primary project-preview-link";
       link.href = item.href;
       link.textContent = "View full project";
 
-      article.appendChild(meta);
-      article.appendChild(title);
-      article.appendChild(overview);
-      article.appendChild(link);
+      const content = document.createElement("div");
+      content.className = "project-preview-content";
+      content.appendChild(title);
+      content.appendChild(overview);
+      content.appendChild(link);
+
+      article.appendChild(content);
 
       root.appendChild(article);
 

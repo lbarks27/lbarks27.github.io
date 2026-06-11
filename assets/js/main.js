@@ -226,13 +226,19 @@
     const nav = document.querySelector("[data-nav-links]");
 
     if (header) {
+      let lastScrollY = window.scrollY;
+
       const updateHeader = function () {
-        if (window.scrollY > 8) {
-          header.classList.add("scrolled");
-        } else {
-          header.classList.remove("scrolled");
-        }
+        const currentScrollY = window.scrollY;
+        const atTop = currentScrollY <= 8;
+        const scrollingUp = currentScrollY < lastScrollY;
+        const shouldShow = atTop || scrollingUp;
+
+        header.classList.toggle("scrolled", !atTop);
+        header.classList.toggle("is-hidden", !shouldShow);
+        lastScrollY = currentScrollY;
       };
+
       updateHeader();
       window.addEventListener("scroll", updateHeader, { passive: true });
     }

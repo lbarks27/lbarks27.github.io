@@ -159,7 +159,6 @@
     shell.innerHTML =
       '<section class="project-hero">' +
       '<div class="container">' +
-      '<p class="section-kicker">Project Page</p>' +
       '<h1 class="project-title">' +
       project.title +
       "</h1>" +
