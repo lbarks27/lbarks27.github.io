@@ -156,9 +156,16 @@
         .join("");
     }
 
+    const heroImage = project.iconOverlay ? project.iconOverlay.replace(/'/g, "\\'") : "";
+
     shell.innerHTML =
-      '<section class="project-hero">' +
+      '<section class="project-hero"' +
+      (heroImage ? ' style="--page-hero-image: url(\'' + heroImage + '\');"' : "") +
+      ">" +
       '<div class="container">' +
+      (heroImage
+        ? '<div class="hero-media" aria-hidden="true"><div class="hero-media-frame"></div></div>'
+        : "") +
       '<h1 class="project-title">' +
       project.title +
       "</h1>" +

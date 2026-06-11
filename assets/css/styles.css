@@ -62,7 +62,7 @@ body > footer {
   flex-shrink: 0;
 }
 
-body::after {
+body.home-page::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -1061,11 +1061,38 @@ img {
 
 .project-hero,
 .blog-hero {
+  position: relative;
   padding: calc(var(--header-height) + 32px) 0 32px;
   background: rgba(0, 0, 0, 0.82);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.hero-media-frame {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.4)),
+    var(--page-hero-image, linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)));
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.9) contrast(1.05) brightness(0.82);
+}
+
+.project-hero .container,
+.blog-hero .container {
+  position: relative;
+  z-index: 1;
 }
 
 .project-shell > .section,
@@ -1648,26 +1675,6 @@ img {
   letter-spacing: 0.08em;
 }
 
-.timeline-post .tags {
-  margin-top: 6px;
-  margin-bottom: 4px;
-}
-
-.timeline-post .back-link,
-.timeline-post .update-related {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: var(--accent-soft);
-  text-decoration: none;
-}
-
-.timeline-post .back-link:hover,
-.timeline-post .update-related:hover {
-  color: var(--accent);
-  text-decoration: underline;
-}
-
 /* Subtle separation between posts for continuous feel (SpaceX-style log) */
 .timeline-post + .timeline-post {
   margin-top: 64px;
@@ -1679,10 +1686,11 @@ img {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
-  width: min(180px, 42%);
+  left: 50%;
+  width: 100vw;
   height: 1px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.32), transparent);
+  transform: translateX(-50%);
 }
 
 @media (max-width: 640px) {

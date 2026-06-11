@@ -47,10 +47,8 @@
           title: post.title,
           excerpt: post.excerpt,
           href: "blog.html#" + encodeURIComponent(post.id),
-          tags: post.tags || [],
           content: post.content || "",
           date: post.date,
-          relatedProject: post.relatedProject,
           image: image,
           imageAlt: imageAlt,
           sortTime: utils.parseIsoDate(post.date).getTime(),
@@ -104,15 +102,6 @@
       body.className = "rich-text update-body";
       body.innerHTML = utils.renderMarkdown(post.content || post.excerpt || "");
 
-      const tags = document.createElement("div");
-      tags.className = "tags";
-      (post.tags || []).forEach((tag) => {
-        const node = document.createElement("span");
-        node.className = "tag";
-        node.textContent = tag;
-        tags.appendChild(node);
-      });
-
       article.appendChild(dateEl);
       article.appendChild(title);
 
@@ -130,19 +119,6 @@
       }
 
       article.appendChild(body);
-
-      if ((post.tags || []).length > 0) {
-        article.appendChild(tags);
-      }
-
-      if (post.relatedProject && projectById.has(post.relatedProject)) {
-        const project = projectById.get(post.relatedProject);
-        const link = document.createElement("a");
-        link.className = "back-link update-related";
-        link.href = "project.html?id=" + encodeURIComponent(project.id);
-        link.textContent = "Open project deep dive: " + project.title;
-        article.appendChild(link);
-      }
 
       root.appendChild(article);
     });
