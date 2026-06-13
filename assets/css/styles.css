@@ -4,8 +4,10 @@
   --bg-panel: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(18, 18, 18, 0.72));
   --bg-panel-soft: linear-gradient(145deg, rgba(8, 8, 8, 0.82), rgba(28, 28, 28, 0.58));
   --ink: #ffffff;
-  --muted: #c4c4c4;
-  --line: rgba(255, 255, 255, 0.24);
+  --muted: #b8b8b8;
+  --line: rgba(255, 255, 255, 0.16);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --surface: rgba(255, 255, 255, 0.045);
   --accent: #ffffff;
   --accent-soft: rgba(255, 255, 255, 0.72);
   --cool-accent: #ffffff;
@@ -39,7 +41,9 @@ body {
   display: flex;
   flex-direction: column;
   font-family: "Space Grotesk", sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.07), transparent 34rem),
+    var(--bg);
   color: var(--ink);
   line-height: 1.6;
   min-height: 100vh;
@@ -80,6 +84,17 @@ body.home-page::after {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.92);
+  outline-offset: 4px;
 }
 
 img {
@@ -218,6 +233,18 @@ img {
 .nav-links a[aria-current="page"] {
   color: var(--ink);
   font-weight: 600;
+  position: relative;
+}
+
+.nav-links a.active::after,
+.nav-links a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 1px;
+  background: var(--ink);
 }
 
 .menu-toggle {
@@ -330,7 +357,7 @@ img {
   align-items: center;
   justify-content: center;
   min-height: 46px;
-  border: 0;
+  border: 1px solid var(--line);
   padding: 0 18px;
   font-family: "Barlow Condensed", sans-serif;
   letter-spacing: 0.14em;
@@ -348,16 +375,20 @@ img {
 
 .btn:hover,
 .btn:focus-visible {
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+  border-color: var(--line-strong);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.38);
   transform: translateY(-1px);
 }
 
 .btn-primary {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.14));
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
 }
 
 .btn-ghost {
-  background: rgba(0, 0, 0, 0.58);
+  background: var(--surface);
 }
 
 .project-card,
@@ -372,6 +403,7 @@ img {
 .placeholder,
 .media-thumb,
 .blog-row {
+  border: 1px solid var(--line);
   border-radius: var(--radius-md);
   backdrop-filter: blur(var(--glass-blur)) saturate(130%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
@@ -638,32 +670,106 @@ img {
 
 .resume-shell {
   margin-top: 0;
-  border: 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
   background: var(--bg-panel);
-  padding: 22px;
+  padding: clamp(22px, 4vw, 42px);
   display: grid;
-  gap: 20px;
+  gap: 32px;
   box-shadow: 0 20px 46px rgba(0, 0, 0, 0.3);
+}
+
+.resume-shell::before,
+.contact-form-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--ink), transparent 58%);
+  opacity: 0.7;
+}
+
+.resume-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(250px, 0.65fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: end;
+}
+
+.resume-intro {
+  display: grid;
+  gap: 12px;
+}
+
+.resume-intro .section-kicker,
+.resume-intro .section-lead {
+  margin: 0;
+}
+
+.resume-heading {
+  margin: 0;
+  max-width: 14ch;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(2rem, 5vw, 3.35rem);
+  letter-spacing: 0.03em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.resume-cta {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.resume-cta p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .resume-list {
   display: grid;
-  gap: 12px;
+  gap: 1px;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
 .resume-item {
-  padding: 14px;
+  position: relative;
+  min-height: 190px;
+  padding: 24px;
   border: 0;
-  background: var(--bg-panel-soft);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  border-radius: 0;
+  background: #0b0b0b;
+  box-shadow: none;
+  transition: background-color 0.2s ease;
+}
+
+.resume-item:hover {
+  background: #111111;
+}
+
+.resume-item-number {
+  display: block;
+  margin-bottom: 36px;
+  color: rgba(255, 255, 255, 0.46);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
 }
 
 .resume-item h4 {
   margin: 0 0 8px;
   font-family: "Barlow Condensed", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  font-size: 1.16rem;
 }
 
 .resume-item p {
@@ -732,15 +838,15 @@ img {
 }
 
 .contact-section {
-  padding-top: 24px;
+  padding-top: 40px;
 }
 
 .contact-layout {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
+  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(24px, 5vw, 64px);
   align-items: start;
-  max-width: 860px;
+  max-width: 1060px;
   margin: 0 auto;
 }
 
@@ -766,26 +872,31 @@ img {
 
 .contact-links {
   display: grid;
-  gap: 12px;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--line);
 }
 
 .contact-card {
   border: 0;
-  background: var(--bg-panel);
-  padding: 16px;
+  border-radius: 0;
+  background: #0b0b0b;
+  padding: 18px;
   display: flex;
   align-items: center;
   gap: 14px;
   min-width: 0;
   min-height: 102px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: none;
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
 }
 
 .contact-link-card:hover,
 .contact-link-card:focus-visible {
-  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.38);
-  transform: translateY(-2px);
+  background: #141414;
+  padding-left: 22px;
 }
 
 .contact-logo {
@@ -863,9 +974,11 @@ img {
 }
 
 .contact-form-shell {
-  border: 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
   background: var(--bg-panel);
-  padding: 22px;
+  padding: clamp(22px, 4vw, 36px);
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.3);
 }
 
@@ -894,9 +1007,9 @@ img {
 .form-field input,
 .form-field textarea {
   width: 100%;
-  border: 0;
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  background: rgba(0, 0, 0, 0.58);
+  background: rgba(255, 255, 255, 0.035);
   color: var(--ink);
   font: inherit;
   padding: 11px 12px;
@@ -918,10 +1031,11 @@ img {
 
 .form-field input:focus,
 .form-field textarea:focus {
-  background: rgba(0, 0, 0, 0.72);
+  border-color: rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.06);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 0 0 3px rgba(255, 255, 255, 0.12),
+    0 0 0 3px rgba(255, 255, 255, 0.09),
     0 14px 30px rgba(0, 0, 0, 0.24);
 }
 
@@ -1012,8 +1126,8 @@ img {
 }
 
 .site-footer {
-  background: rgba(5, 10, 12, 0.8);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.84);
+  box-shadow: inset 0 1px 0 var(--line);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   padding: 26px 0 40px;
@@ -1051,7 +1165,7 @@ img {
 
 .footer-socials a:hover,
 .footer-socials a:focus-visible {
-  color: var(--text);
+  color: var(--ink);
 }
 
 .project-shell,
@@ -1063,7 +1177,7 @@ img {
 .blog-hero {
   position: relative;
   padding: calc(var(--header-height) + 32px) 0 32px;
-  background: rgba(0, 0, 0, 0.82);
+  background: #050505;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
   overflow: hidden;
   backdrop-filter: blur(14px) saturate(140%);
@@ -1082,7 +1196,8 @@ img {
   width: 100%;
   height: 100%;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.4)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.86) 0%, rgba(0, 0, 0, 0.46) 62%, rgba(0, 0, 0, 0.6) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.62)),
     var(--page-hero-image, linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)));
   background-size: cover;
   background-position: center;
@@ -1756,6 +1871,7 @@ img {
 
   .contact-layout {
     grid-template-columns: 1fr;
+    max-width: 760px;
   }
 
   .about-layout,
@@ -1895,6 +2011,10 @@ img {
 
   .contact-form-shell {
     padding: 18px;
+  }
+
+  .resume-overview {
+    grid-template-columns: 1fr;
   }
 
   .contact-form-grid {

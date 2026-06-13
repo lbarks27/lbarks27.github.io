@@ -17,9 +17,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260611-6">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260611-7">
   </head>
-  <body>
+  <body class="contact-page">
     <header class="site-header">
       <div class="container header-wrap">
         <a class="brand" href="index.html#home">Liam Barkley</a>
@@ -37,7 +37,7 @@
     </header>
 
     <main class="project-shell">
-      <section class="blog-hero" style="--page-hero-image: url('assets/images/spider-overlay.jpg');">
+      <section class="blog-hero" style="--page-hero-image: url('../images/spider-overlay.jpg');">
         <div class="container">
           <div class="hero-media" aria-hidden="true">
             <div class="hero-media-frame"></div>
@@ -103,19 +103,19 @@
                 <div class="contact-form-grid">
                   <label class="form-field">
                     <span>Name</span>
-                    <input name="name" type="text" autocomplete="name" required>
+                    <input name="name" type="text" autocomplete="name" placeholder="Your name" required>
                   </label>
                   <label class="form-field">
                     <span>Email</span>
-                    <input name="email" type="email" autocomplete="email" required>
+                    <input name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
                   </label>
                   <label class="form-field form-field-full">
                     <span>Subject</span>
-                    <input name="subject" type="text" autocomplete="off" required>
+                    <input name="subject" type="text" autocomplete="off" placeholder="What would you like to discuss?" required>
                   </label>
                   <label class="form-field form-field-full">
                     <span>Message</span>
-                    <textarea name="message" rows="7" required></textarea>
+                    <textarea name="message" rows="7" placeholder="Project context, timeline, or the question you have in mind." required></textarea>
                   </label>
                 </div>
                 <div class="contact-form-actions">
