@@ -1,7 +1,8 @@
 ---
 id: mach-cutoff
 title: Mach Cutoff
-tagline: Flight-regime transition and cutoff strategy exploration.
+tagline: Shockwave refraction modeling and supersonic aircraft route planning.
+status: under-construction
 github: ""
 iconOverlay: assets/images/mach-cutoff-overlay.png
 iconOverlayAlt: Mach cutoff trajectory fan over map

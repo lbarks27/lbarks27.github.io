@@ -29,7 +29,10 @@
     const items = projects.map((project, index) => ({
       id: project.id,
       title: project.title,
-      summary: project.summary || project.tagline || "",
+      summary:
+        project.status === "under-construction"
+          ? project.tagline || "under construction"
+          : project.summary || project.tagline || "",
       href: "project.html?id=" + encodeURIComponent(project.id),
       image: project.iconOverlay,
       imageAlt: project.iconOverlayAlt || project.title + " project image",
@@ -67,6 +70,9 @@
     items.forEach((item, index) => {
       const article = document.createElement("article");
       article.className = "blog-row";
+      if (index % 2 === 1) {
+        article.classList.add("project-preview-right");
+      }
       article.setAttribute("id", "project-" + item.id);
       article.setAttribute("data-reveal", "");
 
@@ -80,7 +86,6 @@
       const title = document.createElement("h2");
       title.textContent = item.title;
 
-      // Expanded: use the full overview/summary (rich text) instead of short excerpt
       const overview = document.createElement("div");
       overview.className = "rich-text project-overview";
       overview.innerHTML = utils.renderMarkdown(item.summary);

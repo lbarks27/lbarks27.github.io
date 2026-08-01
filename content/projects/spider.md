@@ -2,6 +2,7 @@
 id: spider
 title: SPIDER
 tagline: Integrated project workspace for autonomous behavior experiments.
+status: under-construction
 github: ""
 iconOverlay: assets/images/spider-overlay.jpg
 iconOverlayAlt: SPIDER hardware assembly on a table

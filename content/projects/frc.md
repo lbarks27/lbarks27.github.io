@@ -1,10 +1,11 @@
 ---
 id: frc
 title: FRC
-tagline: FIRST Robotics Competition engineering projects.
+tagline: FIRST Robotics Competition experience.
+status: under-construction
 github: ""
-iconOverlay: assets/images/frc-overlay.png
-iconOverlayAlt: FRC robot on competition field
+iconOverlay: assets/images/frc-overlay.jpg
+iconOverlayAlt: Team 4687 FRC robot with blue LED glow and power cells
 photos: []
 videos: []
 datasets: []

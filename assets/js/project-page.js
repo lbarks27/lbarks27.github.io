@@ -122,45 +122,57 @@
       return '<div class="media-thumb">Add a demo video link or local MP4 here<br><span class="mono">https://www.youtube.com/embed/...</span></div>';
     }
 
-    const heroImage = project.iconOverlay ? project.iconOverlay.replace(/'/g, "\\'") : "";
+    const underConstruction = project.status === "under-construction";
+    const heroImage = project.iconOverlay
+      ? new URL(project.iconOverlay, window.location.href).href.replace(/'/g, "\\'")
+      : "";
+    const heroDescription = underConstruction
+      ? project.tagline || ""
+      : project.summary || project.tagline || "";
+
+    const bodyHtml = underConstruction
+      ? '<article class="panel project-report-pending" data-reveal>' +
+        '<p class="project-report-pending-text">under construction</p>' +
+        "</article>"
+      : '<article class="panel" data-reveal><h2>Overview</h2><div class="rich-text">' +
+        utils.renderMarkdown(project.summary) +
+        "</div></article>" +
+        '<article class="panel" data-reveal><h2>Solver Deep Dive</h2><div class="rich-text">' +
+        utils.renderMarkdown(project.solverApproach) +
+        "</div></article>" +
+        '<article class="panel" data-reveal><h2>Resources</h2><div class="resource-list">' +
+        renderResources() +
+        "</div></article>" +
+        '<article class="panel" data-reveal><h2>Photos</h2><div class="media-grid">' +
+        renderPhotos() +
+        "</div></article>" +
+        '<article class="panel" data-reveal><h2>Videos</h2><div class="media-grid">' +
+        renderVideos() +
+        "</div></article>" +
+        '<article class="panel" data-reveal><h2>Data and Results</h2><div class="rich-text">' +
+        utils.renderMarkdown(project.dataNotes) +
+        '</div><table class="data-table"><thead><tr><th>Metric</th><th>Status</th><th>Notes</th></tr></thead><tbody><tr><td>Primary KPI</td><td>Pending</td><td>Add the metric recruiters should notice first.</td></tr><tr><td>Validation Method</td><td>Pending</td><td>Add test plan, simulation set, or hardware protocol.</td></tr><tr><td>Result Snapshot</td><td>Pending</td><td>Add numerical result and context.</td></tr></tbody></table></article>';
 
     shell.innerHTML =
       '<section class="project-hero"' +
       (heroImage ? ' style="--page-hero-image: url(\'' + heroImage + '\');"' : "") +
       ">" +
-      '<div class="container">' +
       (heroImage
         ? '<div class="hero-media" aria-hidden="true"><div class="hero-media-frame"></div></div>'
         : "") +
+      '<div class="container">' +
       '<h1 class="project-title">' +
       project.title +
       "</h1>" +
-      '<p class="project-tagline">' +
-      project.tagline +
-      "</p>" +
+      '<div class="rich-text project-tagline project-hero-description">' +
+      utils.renderMarkdown(heroDescription) +
+      "</div>" +
       '<a class="back-link" href="projects.html">Back to projects</a>' +
       "</div>" +
       "</section>" +
       '<section class="section">' +
       '<div class="container project-layout">' +
-      '<article class="panel" data-reveal><h2>Overview</h2><div class="rich-text">' +
-      utils.renderMarkdown(project.summary) +
-      "</div></article>" +
-      '<article class="panel" data-reveal><h2>Solver Deep Dive</h2><div class="rich-text">' +
-      utils.renderMarkdown(project.solverApproach) +
-      "</div></article>" +
-      '<article class="panel" data-reveal><h2>Resources</h2><div class="resource-list">' +
-      renderResources() +
-      "</div></article>" +
-      '<article class="panel" data-reveal><h2>Photos</h2><div class="media-grid">' +
-      renderPhotos() +
-      "</div></article>" +
-      '<article class="panel" data-reveal><h2>Videos</h2><div class="media-grid">' +
-      renderVideos() +
-      "</div></article>" +
-      '<article class="panel" data-reveal><h2>Data and Results</h2><div class="rich-text">' +
-      utils.renderMarkdown(project.dataNotes) +
-      '</div><table class="data-table"><thead><tr><th>Metric</th><th>Status</th><th>Notes</th></tr></thead><tbody><tr><td>Primary KPI</td><td>Pending</td><td>Add the metric recruiters should notice first.</td></tr><tr><td>Validation Method</td><td>Pending</td><td>Add test plan, simulation set, or hardware protocol.</td></tr><tr><td>Result Snapshot</td><td>Pending</td><td>Add numerical result and context.</td></tr></tbody></table></article>' +
+      bodyHtml +
       "</div>" +
       "</section>";
 

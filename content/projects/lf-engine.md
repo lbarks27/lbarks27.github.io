@@ -2,6 +2,7 @@
 id: lf-engine
 title: L/F Engine
 tagline: Liquid-fuel engine analysis and development notes.
+status: under-construction
 github: ""
 iconOverlay: assets/images/lf-engine-overlay.png
 iconOverlayAlt: Finite element stress result on engine geometry

@@ -2,6 +2,7 @@
 id: visual-kalman-filter
 title: Visual Kalman Filter
 tagline: Sensor-fusion state estimation with vision support.
+status: under-construction
 github: ""
 iconOverlay: assets/images/visual-kalman-filter-overlay.jpg
 iconOverlayAlt: Kalman filter information flow diagram

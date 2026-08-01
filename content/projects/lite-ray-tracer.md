@@ -1,7 +1,8 @@
 ---
 id: lite-ray-tracer
 title: Lite Ray Tracer
-tagline: Compact rendering engine for ray-traced scenes.
+tagline: Prototype raytracing for Mach cutoff research.
+status: under-construction
 github: ""
 iconOverlay: assets/images/lite-ray-tracer-overlay.png
 iconOverlayAlt: Ray traced arc trajectories over particle field

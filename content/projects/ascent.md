@@ -2,6 +2,7 @@
 id: ascent
 title: ASCENT
 tagline: Ascent profile analysis and optimization study.
+status: under-construction
 github: ""
 iconOverlay: assets/images/ascent-overlay.png
 iconOverlayAlt: Ascent path with engine plume over Earth horizon

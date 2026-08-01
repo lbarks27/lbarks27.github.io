@@ -276,6 +276,7 @@
       solverApproach: sections["Solver Deep Dive"] || String(attributes.solverApproach || ""),
       dataNotes: sections["Data and Results"] || String(attributes.dataNotes || ""),
       github: String(attributes.github || ""),
+      status: String(attributes.status || "").toLowerCase(),
       iconOverlay: String(attributes.iconOverlay || ""),
       iconOverlayAlt: String(attributes.iconOverlayAlt || ""),
       photos: ensureArray(attributes.photos),

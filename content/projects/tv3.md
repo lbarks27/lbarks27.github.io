@@ -1,7 +1,8 @@
 ---
 id: tv3
 title: TV3
-tagline: Third-generation test vehicle iteration.
+tagline: Triple engine thrust vectoring test vehicle.
+status: under-construction
 github: ""
 iconOverlay: assets/images/tv3-overlay.png
 iconOverlayAlt: TV3 thrust vector control hardware setup

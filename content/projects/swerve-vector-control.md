@@ -1,7 +1,8 @@
 ---
 id: swerve-vector-control
 title: Swerve Vector Control
-tagline: Control strategy for vectoring and maneuver authority.
+tagline: Control strategy for thrust vectoring.
+status: under-construction
 github: ""
 iconOverlay: assets/images/swerve-overlay-test.png
 iconOverlayAlt: Swerve vector control hardware close-up

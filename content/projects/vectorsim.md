@@ -1,10 +1,11 @@
 ---
 id: vectorsim
 title: VectorSim
-tagline: Simulation workspace for vector control experiments.
+tagline: Simulation tool for thrust vector control prototyping.
+status: under-construction
 github: ""
-iconOverlay: assets/images/vectorsim-overlay.png
-iconOverlayAlt: Vector simulation 3D axis visualization
+iconOverlay: assets/images/vectorsim-overlay.jpg
+iconOverlayAlt: Handwritten VectorSim physics, integration, and controller notes
 photos: []
 videos: []
 datasets: []

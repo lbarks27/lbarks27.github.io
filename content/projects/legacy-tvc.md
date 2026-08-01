@@ -2,9 +2,10 @@
 id: legacy-tvc
 title: Legacy TVC
 tagline: Archived thrust-vector-control implementation.
+status: under-construction
 github: ""
 iconOverlay: assets/images/legacy-tvc-overlay.jpg
-iconOverlayAlt: Legacy TVC test rig outdoors
+iconOverlayAlt: Legacy TVC static fire on workbench with flame and smoke
 photos: []
 videos: []
 datasets: []
