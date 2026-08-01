@@ -3,16 +3,17 @@
 Static portfolio site with a SpaceX-inspired visual direction.
 
 ## Includes
-- Homepage with `Projects`, `Resume`, `Blog`, and `Contact`
+- Homepage with `Projects`, `Gallery`, `Resume`, and `Contact`
 - Individual project pages via `project.html?id=<project-id>`
-- Blog page for high-level milestone updates
-- Editable content files in `content/projects/` and `content/blog/`
+- Editable content files in `content/projects/`
 
 ## Quick edit checklist
 1. Update your real links in `content/site.json`:
    - `owner.email`
    - `owner.github`
    - `owner.youtube`
+   - `owner.x`
+   - `owner.instagram`
 2. Add your resume PDF to:
    - `assets/resume/Liam_Barkley_Resume.pdf`
 3. Edit project files in `content/projects/*.md`:
@@ -20,9 +21,8 @@ Static portfolio site with a SpaceX-inspired visual direction.
    - `## Overview`
    - `## Solver Deep Dive`
    - `## Data and Results`
-4. Edit blog posts in `content/blog/*.md`.
-5. Add or remove filenames in `content/projects/index.json` and `content/blog/index.json` when you add or delete entries.
-6. Add local media to `assets/images/` and reference paths in project front matter.
+4. Add or remove filenames in `content/projects/index.json` when you add or delete entries.
+5. Add local media to `assets/images/` and reference paths in project front matter.
 
 ## Local preview
 Run from this folder:

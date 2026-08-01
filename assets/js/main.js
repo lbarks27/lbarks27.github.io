@@ -56,6 +56,40 @@
         node.setAttribute("href", data.owner.youtube);
       }
     });
+
+    document.querySelectorAll("[data-owner-x]").forEach((node) => {
+      if (!data.owner.x) {
+        return;
+      }
+
+      node.textContent = data.owner.x;
+      if (node.tagName.toLowerCase() === "a") {
+        node.setAttribute("href", data.owner.x);
+      }
+    });
+
+    document.querySelectorAll("[data-owner-x-link]").forEach((node) => {
+      if (data.owner.x) {
+        node.setAttribute("href", data.owner.x);
+      }
+    });
+
+    document.querySelectorAll("[data-owner-instagram]").forEach((node) => {
+      if (!data.owner.instagram) {
+        return;
+      }
+
+      node.textContent = data.owner.instagram;
+      if (node.tagName.toLowerCase() === "a") {
+        node.setAttribute("href", data.owner.instagram);
+      }
+    });
+
+    document.querySelectorAll("[data-owner-instagram-link]").forEach((node) => {
+      if (data.owner.instagram) {
+        node.setAttribute("href", data.owner.instagram);
+      }
+    });
   }
 
   function installContactForm(data) {
@@ -122,14 +156,12 @@
     }
 
     const projects = Array.isArray(data.projects) ? data.projects : [];
-    const blogPosts = Array.isArray(data.blogPosts) ? data.blogPosts : [];
     const parseIsoDate = getDateParser();
     const formatter = new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric"
     });
-    const projectById = new Map(projects.map((project) => [project.id, project]));
 
     function dateTime(value) {
       const time = parseIsoDate(value).getTime();
@@ -147,27 +179,9 @@
       sourceIndex: index
     }));
 
-    const blogItems = blogPosts.map((post, index) => {
-      const relatedProject = projectById.get(post.relatedProject);
-      const image = post.image || (relatedProject ? relatedProject.iconOverlay : "");
-      const imageAlt =
-        post.imageAlt || (relatedProject ? relatedProject.iconOverlayAlt || relatedProject.title + " project image" : "");
-      return {
-        type: "Update",
-        title: post.title,
-        summary: post.excerpt,
-        href: "blog.html#" + encodeURIComponent(post.id),
-        image: image,
-        imageAlt: imageAlt,
-        date: post.date,
-        sortTime: dateTime(post.date) || Date.UTC(2025, 0, 1) - index * 60000,
-        sourceIndex: projects.length + index
-      };
-    });
-
     root.innerHTML = "";
 
-    if (projects.length === 0 && blogPosts.length === 0) {
+    if (projects.length === 0) {
       const placeholder = document.createElement("div");
       placeholder.className = "placeholder";
       placeholder.setAttribute("data-reveal", "");
@@ -177,7 +191,6 @@
     }
 
     projectItems
-      .concat(blogItems)
       .sort((a, b) => b.sortTime - a.sortTime || a.sourceIndex - b.sourceIndex)
       .slice(0, 8)
       .forEach((item) => {
@@ -272,8 +285,8 @@
 
     let target = null;
 
-    if (file === "blog.html") {
-      target = "blog.html";
+    if (file === "index.html" || file === "" || file === "/") {
+      target = "index.html";
     } else if (file === "projects.html" || file === "project.html") {
       target = "projects.html";
     } else if (file === "gallery.html") {
@@ -284,7 +297,7 @@
       target = "contact.html";
     }
 
-    if (!target) return; // home or unknown: no nav item active
+    if (!target) return;
 
     links.forEach((link) => {
       const href = (link.getAttribute("href") || "").toLowerCase();

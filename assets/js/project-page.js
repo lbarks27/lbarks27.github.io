@@ -37,16 +37,6 @@
     const utils = getUtils();
     document.title = project.title + " | Liam Barkley";
 
-    const formatter = new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric"
-    });
-
-    const relatedPosts = (data.blogPosts || [])
-      .filter((post) => post.relatedProject === project.id)
-      .sort((a, b) => utils.parseIsoDate(b.date).getTime() - utils.parseIsoDate(a.date).getTime());
-
     function renderResources() {
       const resources = [];
 
@@ -132,30 +122,6 @@
       return '<div class="media-thumb">Add a demo video link or local MP4 here<br><span class="mono">https://www.youtube.com/embed/...</span></div>';
     }
 
-    function renderRelatedPosts() {
-      if (relatedPosts.length === 0) {
-        return "<p>No related blog updates yet.</p>";
-      }
-
-      return relatedPosts
-        .map((post) => {
-          return (
-            '<div class="resource-item">' +
-            "<strong>" +
-            post.title +
-            "</strong>" +
-            "<span>" +
-            formatter.format(utils.parseIsoDate(post.date)) +
-            "</span>" +
-            '<a href="blog.html#' +
-            post.id +
-            '">Read</a>' +
-            "</div>"
-          );
-        })
-        .join("");
-    }
-
     const heroImage = project.iconOverlay ? project.iconOverlay.replace(/'/g, "\\'") : "";
 
     shell.innerHTML =
@@ -195,9 +161,6 @@
       '<article class="panel" data-reveal><h2>Data and Results</h2><div class="rich-text">' +
       utils.renderMarkdown(project.dataNotes) +
       '</div><table class="data-table"><thead><tr><th>Metric</th><th>Status</th><th>Notes</th></tr></thead><tbody><tr><td>Primary KPI</td><td>Pending</td><td>Add the metric recruiters should notice first.</td></tr><tr><td>Validation Method</td><td>Pending</td><td>Add test plan, simulation set, or hardware protocol.</td></tr><tr><td>Result Snapshot</td><td>Pending</td><td>Add numerical result and context.</td></tr></tbody></table></article>' +
-      '<article class="panel" data-reveal><h2>Recent Blog Updates</h2><div class="resource-list">' +
-      renderRelatedPosts() +
-      "</div></article>" +
       "</div>" +
       "</section>";
 

@@ -233,18 +233,6 @@ img {
 .nav-links a[aria-current="page"] {
   color: var(--ink);
   font-weight: 600;
-  position: relative;
-}
-
-.nav-links a.active::after,
-.nav-links a[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -8px;
-  height: 1px;
-  background: var(--ink);
 }
 
 .menu-toggle {
@@ -396,7 +384,6 @@ img {
 .resume-shell,
 .resume-item,
 .blog-card,
-.contact-card,
 .contact-form-shell,
 .panel,
 .resource-item,
@@ -668,6 +655,73 @@ img {
   margin-top: 0;
 }
 
+.resume-preview {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #f4f4f4;
+  box-shadow: none;
+}
+
+.resume-preview-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #f4f4f4;
+}
+
+.resume-preview-fallback {
+  margin: 0;
+  padding: 28px 24px;
+  color: #333;
+  text-align: center;
+}
+
+.resume-preview-fallback a {
+  text-decoration: underline;
+}
+
+.project-shell > .resume-section {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.resume-page > main.project-shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.resume-page .blog-hero {
+  flex: 0 0 auto;
+  box-shadow: none;
+}
+
+.resume-page .resume-section {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  height: calc(100vw * 11 / 8.5);
+  min-height: calc(100svh - var(--header-height));
+  padding: 0;
+  margin: 0;
+}
+
+.resume-page .resume-preview {
+  position: absolute;
+  inset: 0;
+}
+
+.resume-page .resume-preview-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .resume-shell {
   margin-top: 0;
   position: relative;
@@ -837,27 +891,58 @@ img {
   -webkit-backdrop-filter: blur(8px) saturate(120%);
 }
 
+.contact-find-banner {
+  position: relative;
+  padding: calc(var(--header-height) + 28px) 0 28px;
+  border-bottom: 1px solid var(--line);
+  background: #050505;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+.contact-find-banner-inner {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  text-align: center;
+}
+
+.contact-find-title {
+  margin: 0;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.contact-banner-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 16px;
+}
+
+.contact-banner-link {
+  color: rgba(255, 255, 255, 0.78);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+}
+
+.contact-banner-link:hover,
+.contact-banner-link:focus-visible {
+  color: var(--ink);
+}
+
 .contact-section {
   padding-top: 40px;
 }
 
-.contact-layout {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
-  gap: clamp(24px, 5vw, 64px);
-  align-items: start;
-  max-width: 1060px;
-  margin: 0 auto;
-}
-
-.contact-methods {
-  display: grid;
-  gap: 0;
-  min-width: 0;
-}
-
-.contact-methods .contact-heading {
-  margin-bottom: 16px;
+.contact-section .container {
+  max-width: 760px;
 }
 
 .contact-heading {
@@ -870,107 +955,12 @@ img {
   overflow-wrap: break-word;
 }
 
-.contact-links {
-  display: grid;
-  gap: 1px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--line);
-}
-
-.contact-card {
-  border: 0;
-  border-radius: 0;
-  background: #0b0b0b;
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 0;
-  min-height: 102px;
-  box-shadow: none;
-  transition: background-color 0.2s ease, padding-left 0.2s ease;
-}
-
-.contact-link-card:hover,
-.contact-link-card:focus-visible {
-  background: #141414;
-  padding-left: 22px;
-}
-
-.contact-logo {
-  flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
-  border: 0;
-  border-radius: var(--radius-sm);
-  display: grid;
-  place-items: center;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)),
-    rgba(10, 10, 10, 0.36);
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
-
-.contact-logo svg {
-  width: 29px;
-  height: 29px;
-  display: block;
-}
-
-.contact-logo svg path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.contact-logo-github svg path,
-.contact-logo-youtube svg path:first-child {
-  fill: currentColor;
-  stroke: none;
-}
-
-.contact-logo-youtube svg path:last-child {
-  fill: var(--accent);
-  stroke: none;
-}
-
-.contact-logo-email {
-  color: var(--cool-accent);
-}
-
-.contact-logo-github {
-  color: var(--accent);
-}
-
-.contact-logo-youtube {
-  color: var(--danger-accent);
-}
-
-.contact-link-body {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-}
-
-.contact-link-label,
 .form-field span {
   font-family: "Barlow Condensed", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.82rem;
   color: var(--accent-soft);
-}
-
-.contact-link-text {
-  margin: 0;
-  color: var(--ink);
-  overflow-wrap: anywhere;
 }
 
 .contact-form-shell {
@@ -1177,6 +1167,7 @@ img {
 .blog-hero {
   position: relative;
   padding: calc(var(--header-height) + 32px) 0 32px;
+  border-bottom: 1px solid var(--line);
   background: #050505;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
   overflow: hidden;
@@ -1208,6 +1199,7 @@ img {
 .blog-hero .container {
   position: relative;
   z-index: 1;
+  text-align: center;
 }
 
 .project-shell > .section,
@@ -1215,14 +1207,6 @@ img {
   padding-top: 28px;
   padding-bottom: 48px;
 }
-
-/* When the updates stream is the main content, pull it a bit closer to the hero */
-.blog-shell .blog-list.timeline {
-  margin-top: 8px;
-  margin-bottom: 0;
-}
-
-
 
 /* Projects page: expanded preview boxes with full-bleed background images (like spacex.com).
    Each box and the separators span the entire viewport width.
@@ -1340,7 +1324,7 @@ img {
 }
 
 .project-tagline {
-  margin: 12px 0 0;
+  margin: 12px auto 0;
   color: var(--muted);
   max-width: 70ch;
   overflow-wrap: break-word;
@@ -1518,64 +1502,46 @@ img {
 }
 
 .gallery-section {
-  padding-top: 24px;
+  padding: 0;
+}
+
+.project-shell > .gallery-section {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.gallery-section .container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
 }
 
 .gallery-grid {
   column-count: 3;
-  column-gap: 18px;
+  column-gap: 0;
 }
 
 .gallery-item {
   position: relative;
   display: block;
   width: 100%;
-  margin: 0 0 18px;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   border: 0;
-  border-radius: var(--radius-md);
-  background: var(--bg-panel);
-  box-shadow: var(--panel-shadow);
-  backdrop-filter: blur(var(--glass-blur)) saturate(130%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   break-inside: avoid;
-  transition: box-shadow 0.22s ease, filter 0.22s ease, transform 0.22s ease;
-}
-
-.gallery-item-large {
-  grid-column: auto;
-  grid-row: auto;
-}
-
-.gallery-item-wide {
-  grid-column: auto;
-}
-
-.gallery-item:hover,
-.gallery-item:focus-visible {
-  box-shadow: 0 28px 62px rgba(0, 0, 0, 0.48);
-  transform: translateY(-2px);
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 .gallery-item img {
   width: 100%;
-  position: relative;
-  display: block;
   height: auto;
-  filter: saturate(0.9) contrast(1.04) brightness(0.84);
-  transform: scale(1);
-  transform-origin: center;
-  transition: filter 0.22s ease, transform 0.32s ease;
-}
-
-.gallery-item:hover img,
-.gallery-item:focus-visible img {
-  filter: saturate(1.04) contrast(1.1) brightness(0.98);
-}
-
-.gallery-item:hover img,
-.gallery-item:focus-visible img {
-  transform: scale(1.035);
+  display: block;
+  border-radius: 0;
 }
 
 .data-table {
@@ -1713,114 +1679,6 @@ img {
   max-width: 76ch;
 }
 
-/* Updates page — inspired by spacex.com/updates
-   Clean, editorial, continuous stack of full posts.
-   Date + bold title + full body content. Minimal chrome. */
-
-.blog-list.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin: 32px 0 48px;
-}
-
-/* Each update is a self-contained full post */
-.timeline-post {
-  /* no heavy card; pure content flow */
-}
-
-.update-date {
-  display: block;
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.95rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent-soft);
-  margin-bottom: 8px;
-}
-
-.update-title {
-  margin: 0 0 16px;
-  font-size: clamp(1.42rem, 4vw, 2rem);
-  line-height: 1.08;
-  letter-spacing: 0.005em;
-}
-
-.update-title a {
-  color: var(--ink);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.update-title a:hover,
-.update-title a:focus-visible {
-  color: var(--accent);
-}
-
-.update-media {
-  margin: 18px 0 22px;
-  max-width: 100%;
-}
-
-.update-media img {
-  display: block;
-  width: 100%;
-  max-height: 420px;
-  object-fit: cover;
-  border-radius: var(--radius-md, 6px);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
-}
-
-.update-body {
-  margin-bottom: 16px;
-}
-
-/* Full posts read with primary ink color */
-.timeline-post .rich-text {
-  color: var(--ink);
-  max-width: 78ch;
-}
-
-.timeline-post .rich-text h2,
-.timeline-post .rich-text h3 {
-  /* internal section heads (e.g. "Super Heavy V3 Change Highlights") */
-  margin-top: 26px;
-  margin-bottom: 10px;
-  font-size: 1.05rem;
-  letter-spacing: 0.08em;
-}
-
-/* Subtle separation between posts for continuous feel (SpaceX-style log) */
-.timeline-post + .timeline-post {
-  margin-top: 64px;
-  padding-top: 64px;
-  position: relative;
-}
-
-.timeline-post + .timeline-post::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.32), transparent);
-  transform: translateX(-50%);
-}
-
-@media (max-width: 640px) {
-  .blog-list.timeline {
-    margin-bottom: 32px;
-  }
-  .timeline-post + .timeline-post {
-    margin-top: 48px;
-    padding-top: 48px;
-  }
-  .update-media img {
-    max-height: 280px;
-  }
-}
-
 .mono {
   font-family: "IBM Plex Mono", monospace;
 }
@@ -1867,11 +1725,6 @@ img {
   .post-showcase-card:nth-child(2) {
     grid-column: span 6;
     min-height: 300px;
-  }
-
-  .contact-layout {
-    grid-template-columns: 1fr;
-    max-width: 760px;
   }
 
   .about-layout,
@@ -1943,12 +1796,6 @@ img {
     column-gap: 0;
   }
 
-  .gallery-item,
-  .gallery-item-large,
-  .gallery-item-wide {
-    margin-bottom: 14px;
-  }
-
   .hero {
     min-height: 76vh;
     min-height: 76svh;
@@ -1989,24 +1836,26 @@ img {
     padding-bottom: 36px;
   }
 
+  .project-shell > .gallery-section {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
   .blog-shell > .projects-list-section {
     padding-top: 0;
     padding-bottom: 0;
   }
 
-  .contact-card {
-    min-height: 0;
-    padding: 14px;
+  .contact-find-banner {
+    padding: calc(var(--header-height) + 22px) 0 22px;
   }
 
-  .contact-logo {
-    width: 46px;
-    height: 46px;
+  .contact-find-banner-inner {
+    gap: 14px;
   }
 
-  .contact-logo svg {
-    width: 26px;
-    height: 26px;
+  .contact-banner-links {
+    gap: 8px 14px;
   }
 
   .contact-form-shell {

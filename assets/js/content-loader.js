@@ -284,22 +284,6 @@
     };
   }
 
-  function normalizeBlogPost(documentData) {
-    const attributes = documentData.attributes;
-
-    return {
-      id: String(attributes.id || ""),
-      title: String(attributes.title || ""),
-      date: String(attributes.date || ""),
-      excerpt: String(attributes.excerpt || ""),
-      tags: ensureArray(attributes.tags),
-      relatedProject: String(attributes.relatedProject || ""),
-      image: String(attributes.image || ""),
-      imageAlt: String(attributes.imageAlt || ""),
-      content: documentData.body.trim()
-    };
-  }
-
   async function loadText(path) {
     const response = await fetch(buildVersionedPath(path), { cache: "no-store" });
     if (!response.ok) {
@@ -344,15 +328,16 @@
       console.error("Failed to load site metadata.", error);
     }
 
-    const results = await Promise.all([
-      loadCollectionSafely("content/projects/index.json", "content/projects/", normalizeProject, "projects"),
-      loadCollectionSafely("content/blog/index.json", "content/blog/", normalizeBlogPost, "blog")
-    ]);
+    const projects = await loadCollectionSafely(
+      "content/projects/index.json",
+      "content/projects/",
+      normalizeProject,
+      "projects"
+    );
 
     return {
       owner: siteData.owner || {},
-      projects: results[0],
-      blogPosts: results[1]
+      projects: projects
     };
   }
 
@@ -376,8 +361,7 @@
       console.error(error);
       const fallback = {
         owner: {},
-        projects: [],
-        blogPosts: []
+        projects: []
       };
       window.PORTFOLIO_DATA = fallback;
       return fallback;
